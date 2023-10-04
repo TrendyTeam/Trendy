@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.myapplication
+package kh.edu.rupp.ite.trendy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
