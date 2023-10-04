@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'kh.edu.rupp.ite.myapplication'
+    namespace 'kh.edu.rupp.ite.trendy'
     compileSdk 33
 
     defaultConfig {
-        applicationId "kh.edu.rupp.ite.myapplication"
+        applicationId "kh.edu.rupp.ite.trendy"
         minSdk 24
         targetSdk 33
         versionCode 1
