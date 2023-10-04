@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.trendy
+package kh.edu.rupp.ite.myapplication
 
 import org.junit.Test
 
