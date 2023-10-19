@@ -2,8 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="buttonColor">#DB3022</color>
     <color name="internet_disconnect">#FF0000</color>
     <color name="internet_connect">#008d45</color>
+    <color name="bg">#F9F9F9</color>
 
 </resources>
