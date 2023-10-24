@@ -1,25 +1,25 @@
 package kh.edu.rupp.ite.trendy.Base
 
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.danny.coremodule.CoreActivity
+import com.danny.coremodule.CoreView
 import com.google.android.material.snackbar.Snackbar
 import kh.edu.rupp.ite.trendy.Application.TrendyApplication
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.databinding.ActivityBaseBinding
 
-abstract class BaseActivityBinding<VB: ViewBinding>():CoreActivity() {
+abstract class BaseActivityBinding<VB: ViewBinding>():CoreActivity(),CoreView {
 
     protected lateinit var binding: VB
-    private lateinit var bindingP: ActivityBaseBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(R.layout.activity_base)
-        bindingP = ActivityBaseBinding.inflate(layoutInflater)
         binding = getLayoutViewBinding()
-
-
+        findViewById<FrameLayout>(R.id.content_view).addView(binding.root)
+        initView()
     }
     override fun onInternetDisconnect() {
         TrendyApplication.isInternetConnected = false

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Trendy"
         tools:targetApi="31" >
         <activity
-            android:name="kh.edu.rupp.ite.trendy.MainActivity"
+            android:name="kh.edu.rupp.ite.trendy.UI.Home.HomeActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
