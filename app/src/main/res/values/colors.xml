@@ -3,8 +3,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="buttonColor">#DB3022</color>
+    <color name="indicator">#75FF3E2F</color>
     <color name="internet_disconnect">#FF0000</color>
     <color name="internet_connect">#008d45</color>
     <color name="bg">#F9F9F9</color>
+    <color name="main_bg">#F6F6F6</color>
+    <color name="white_4cart">#FFFFFF</color>
+    <color name="secondary">#222222</color>
+    <color name="tran">#00FFFFFF</color>
+
+
+
 
 </resources>
