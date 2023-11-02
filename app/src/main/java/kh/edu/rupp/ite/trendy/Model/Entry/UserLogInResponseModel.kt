@@ -20,8 +20,8 @@ data class UserLogInResponseModel(
     var user: User?
 ) {
     data class Messages(
-        @SerializedName("password")
-        var password: String?
+        @SerializedName("err")
+        var err: String?
     )
 
     data class User(
