@@ -4,10 +4,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import kh.edu.rupp.ite.trendy.Base.BaseActivityBinding
 import kh.edu.rupp.ite.trendy.R
+import kh.edu.rupp.ite.trendy.UI.Auth.LoginBottomSheetFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Cart.CartFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Favorite.FavoriteFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Home.HomeFragment
-import kh.edu.rupp.ite.trendy.UI.Fragment.Profile.ProfileFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Shop.ShopFragment
 import kh.edu.rupp.ite.trendy.databinding.ActivityMainBinding
 
@@ -45,9 +45,11 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
                     true
                 }
                 R.id.profile ->{
-                    showFragment(ProfileFragment())
+
+                    val bottomSheet = LoginBottomSheetFragment(this)
+                    bottomSheet.show(supportFragmentManager, "bottom_sheet_login_fragment")
                     STATE = 4
-                    true
+                    false
                 }
                 else ->{
                     false

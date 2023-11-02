@@ -11,7 +11,6 @@ import com.danny.coremodule.CoreView
 import com.google.android.material.snackbar.Snackbar
 import kh.edu.rupp.ite.trendy.Application.TrendyApplication
 import kh.edu.rupp.ite.trendy.R
-import kh.edu.rupp.ite.trendy.databinding.ActivityBaseBinding
 
 abstract class BaseActivityBinding<VB: ViewBinding>():CoreActivity(),CoreView {
 
