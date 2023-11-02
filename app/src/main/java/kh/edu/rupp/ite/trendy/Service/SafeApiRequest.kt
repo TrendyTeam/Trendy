@@ -1,7 +1,7 @@
 package kh.edu.rupp.ite.trendy.Service
 
 import com.google.gson.GsonBuilder
-import kh.edu.rupp.ite.trendy.Model.Entry.UserLoginErrorModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginErrorModel
 import kh.edu.rupp.ite.trendy.Util.ApiException
 import org.json.JSONObject
 import retrofit2.Response

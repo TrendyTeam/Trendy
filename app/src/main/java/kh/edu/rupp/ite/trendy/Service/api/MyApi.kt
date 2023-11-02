@@ -1,7 +1,7 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
-import kh.edu.rupp.ite.trendy.Model.Entry.UserLogInResponseModel
-import kh.edu.rupp.ite.trendy.Model.Entry.UserLoginBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response

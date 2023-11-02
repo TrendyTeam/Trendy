@@ -1,7 +1,7 @@
 package kh.edu.rupp.ite.trendy.Model.Repository.User
 
-import kh.edu.rupp.ite.trendy.Model.Entry.UserLogInResponseModel
-import kh.edu.rupp.ite.trendy.Model.Entry.UserLoginBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
 import kh.edu.rupp.ite.trendy.Service.SafeApiRequest
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 
