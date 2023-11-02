@@ -45,6 +45,7 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
                     true
                 }
                 R.id.profile ->{
+
                     val bottomSheet = LoginBottomSheetFragment(this)
                     bottomSheet.show(supportFragmentManager, "bottom_sheet_login_fragment")
                     STATE = 4
