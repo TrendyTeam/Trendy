@@ -11,4 +11,9 @@
         <item name="android:color">@color/indicator</item>
     </style>
 
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/buttonColor</item>
+        <item name="android:textColorSecondary">@color/black</item>
+    </style>
+
 </resources>

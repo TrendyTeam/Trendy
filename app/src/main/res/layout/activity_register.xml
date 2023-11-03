@@ -2,9 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/bg"
-    android:layout_height="match_parent">
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:layout_height="match_parent"
+    android:focusable="true">
 
   <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
@@ -27,49 +31,88 @@
           android:textSize="20sp"/>
 
       <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/usernameInp"
           android:background="@color/white"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          app:boxStrokeColor="@color/buttonColor"
+          app:hintTextColor="@color/buttonColor"
           android:layout_marginTop="30dp"
           android:layout_marginStart="15dp"
           android:layout_marginEnd="15dp"
-          android:hint="@string/name">
+          android:hint="@string/username">
 
           <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/usernameEdt"
+              android:inputType="text"
+              android:imeOptions="actionDone"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               />
       </com.google.android.material.textfield.TextInputLayout>
 
       <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/phoneTxtLy"
           android:background="@color/white"
           android:layout_width="match_parent"
+          app:boxStrokeColor="@color/buttonColor"
+          app:hintTextColor="@color/buttonColor"
           android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
+          android:layout_marginTop="10dp"
           android:layout_marginStart="15dp"
           android:layout_marginEnd="15dp"
-          android:hint="@string/email">
-
+          android:hint="@string/phone">
           <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/phoneTxtEdt"
+              android:inputType="phone"
+              android:imeOptions="actionDone"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               />
       </com.google.android.material.textfield.TextInputLayout>
-
       <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/passwordTxtLy"
           android:background="@color/white"
+          app:boxStrokeColor="@color/buttonColor"
+          app:hintTextColor="@color/buttonColor"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
+          android:layout_marginTop="10dp"
           android:layout_marginStart="15dp"
+          app:passwordToggleEnabled="true"
           android:layout_marginEnd="15dp"
           android:hint="@string/password">
 
           <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/passwordTxtEdt"
+              android:inputType="textPassword"
+              android:imeOptions="actionDone"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               />
       </com.google.android.material.textfield.TextInputLayout>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_margin="15dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <CheckBox
+              android:theme="@style/checkBoxStyle"
+              android:textColor="@color/black"
+              android:id="@+id/gender_male"
+              android:text="@string/male"
+              android:layout_width="wrap_content"
+              android:layout_height="40dp"/>
+          <CheckBox
+              android:theme="@style/checkBoxStyle"
+              android:textColor="@color/black"
+              android:id="@+id/gender_female"
+              android:layout_marginStart="10dp"
+              android:text="@string/female"
+              android:layout_width="wrap_content"
+              android:layout_height="40dp"/>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
 
       <LinearLayout
