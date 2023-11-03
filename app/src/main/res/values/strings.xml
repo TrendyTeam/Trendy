@@ -22,6 +22,10 @@
     <string name="or">OR</string>
     <string name="register">Register</string>
     <string name="phone">Phone</string>
+    <string name="categories">Categories</string>
+    <string name="viewAllItem">VIEW ALL ITEMS</string>
+    <string name="chooseCategory">Choose Category</string>
+
 
 
 </resources>
