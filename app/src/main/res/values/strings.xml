@@ -28,6 +28,12 @@
     <string name="categories">Categories</string>
     <string name="viewAllItem">VIEW ALL ITEMS</string>
     <string name="chooseCategory">Choose Category</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="orderHistory">Order History</string>
+    <string name="address"> Address</string>
+    <string name="changeLanguage"> Change Language </string>
+    <string name="myProfile"> My Profile </string>
+    <string name="signOut"> Sign Out </string>
 
 
 </resources>
