@@ -18,7 +18,7 @@ class UserAuthViewModel(
     var authListener:UserAuthListener? = null
 
     //get user token
-    private fun loadToken(){
+     fun loadToken(){
         val token = userRepository.getToken()
         _token.value = token ?: ""
     }
