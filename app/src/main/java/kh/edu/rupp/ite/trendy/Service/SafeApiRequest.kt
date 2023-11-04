@@ -3,6 +3,7 @@ package kh.edu.rupp.ite.trendy.Service
 import com.google.gson.GsonBuilder
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginErrorModel
 import kh.edu.rupp.ite.trendy.Util.ApiException
+import kh.edu.rupp.ite.trendy.Util.logCus
 import org.json.JSONObject
 import retrofit2.Response
 
@@ -14,6 +15,7 @@ abstract class SafeApiRequest {
             return response.body()!!
         }else{
             val error = response.errorBody()?.string()
+            logCus("errorData = $error")
             val message = StringBuilder()
             error?.let {
                 try {

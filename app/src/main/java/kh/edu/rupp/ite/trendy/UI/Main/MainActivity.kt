@@ -2,13 +2,21 @@ package kh.edu.rupp.ite.trendy.UI.Main
 
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import kh.edu.rupp.ite.trendy.Base.BaseActivityBinding
+import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
+import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.R
+import kh.edu.rupp.ite.trendy.Service.api.MyApi
+import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Auth.LoginBottomSheetFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Cart.CartFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Favorite.FavoriteFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Home.HomeFragment
 import kh.edu.rupp.ite.trendy.UI.Fragment.Shop.ShopFragment
+import kh.edu.rupp.ite.trendy.Util.logCus
+import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModel
+import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
@@ -17,6 +25,16 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
     override fun initView() {
         setStatusBarColor(ActivityCompat.getColor(this, R.color.indicator))
         initBottomNavigate()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor()
+        val api = MyApi(networkConnectionInterceptor)
+        val sharedPreferences = MySharedPreferences(this)
+        val userRepository = UserRepository(api, sharedPreferences)
+        val factory = UserAuthViewModelFactory(userRepository)
+        val viewModel = ViewModelProvider(this, factory).get(UserAuthViewModel::class.java)
+
+        viewModel.token
+        logCus("token = $")
+
 
     }
 
@@ -46,7 +64,7 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
                 }
                 R.id.profile ->{
 
-                    val bottomSheet = LoginBottomSheetFragment(this)
+                    val bottomSheet = LoginBottomSheetFragment(this, this@MainActivity)
                     bottomSheet.show(supportFragmentManager, "bottom_sheet_login_fragment")
                     STATE = 4
                     false

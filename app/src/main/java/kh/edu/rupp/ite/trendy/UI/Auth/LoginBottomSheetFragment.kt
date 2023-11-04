@@ -1,9 +1,11 @@
 package kh.edu.rupp.ite.trendy.UI.Auth
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +17,21 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
+import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpModel
 import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.Util.hideKeyboard
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthListener
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.ActivityLoginBinding
 
-class LoginBottomSheetFragment(private val context: Context):BottomSheetDialogFragment(), UserAuthListener {
+
+class LoginBottomSheetFragment(private val context: Context, private val activity:Activity):BottomSheetDialogFragment(), UserAuthListener {
     private var btnClose : ImageView?=null
     private var btnRegister: Button? = null
     private var btnLogin: Button? = null
@@ -38,7 +44,8 @@ class LoginBottomSheetFragment(private val context: Context):BottomSheetDialogFr
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val networkConnectionInterceptor = NetworkConnectionInterceptor()
         val api = MyApi(networkConnectionInterceptor)
-        val userRepository = UserRepository(api)
+        val sharedPreferences = MySharedPreferences(requireContext())
+        val userRepository = UserRepository(api, sharedPreferences)
         val factory = UserAuthViewModelFactory(userRepository)
         viewModel = ViewModelProvider(this, factory).get(UserAuthViewModel::class.java)
         viewModel!!.authListener = this
@@ -57,7 +64,7 @@ class LoginBottomSheetFragment(private val context: Context):BottomSheetDialogFr
         edtPassword = view.findViewById(R.id.passwordTxtEdt)
         btnLogin = view.findViewById(R.id.button_login)
         btnRegister?.setOnClickListener {
-            val bottomSheet = SignUpBottomSheetFragment(requireContext())
+            val bottomSheet = SignUpBottomSheetFragment(requireContext(), activity)
             bottomSheet.show(requireActivity().supportFragmentManager, "bottom_sheet_signup_fragment")
         }
         btnClose?.setOnClickListener {
@@ -67,11 +74,24 @@ class LoginBottomSheetFragment(private val context: Context):BottomSheetDialogFr
 
 
         btnLogin?.setOnClickListener {
+            hideKeyboard(view, activity)
             val phone = edtPhone?.text.toString()
             val password = edtPassword?.text.toString()
             viewModel?.userLogIn(phone,password)
 
 
+        }
+
+        edtPassword?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v, activity)
+            }
+        }
+
+        edtPhone?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v, activity)
+            }
         }
 
 
@@ -105,4 +125,10 @@ class LoginBottomSheetFragment(private val context: Context):BottomSheetDialogFr
     override fun onFailAuth(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onSignUpSuccess(model: UserSignUpModel) {
+        Log.d("TAG", "onSignUpSuccess: ")
+    }
+
+
 }

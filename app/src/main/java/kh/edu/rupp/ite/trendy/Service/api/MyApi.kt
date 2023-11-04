@@ -2,6 +2,8 @@ package kh.edu.rupp.ite.trendy.Service.api
 
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpModel
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -12,12 +14,17 @@ import retrofit2.http.POST
 
 interface MyApi {
 
-
+    //user logIn
     @POST("user/login/user")
     suspend fun userLogin(
         @Body info: UserLoginBody
     ): Response<UserLogInResponseModel>
 
+    //user signUp
+    @POST("user/create")
+    suspend fun userSignUp(
+        @Body info: UserSignUpBody
+    ):Response<UserSignUpModel>
 
 
 
