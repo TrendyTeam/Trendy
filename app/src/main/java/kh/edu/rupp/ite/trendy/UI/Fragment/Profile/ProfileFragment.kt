@@ -9,15 +9,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpModel
+import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.R
+import kh.edu.rupp.ite.trendy.Service.api.MyApi
+import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthListener
+import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModel
+import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModelFactory
 
-class ProfileFragment (private val context: Context, private val activity: Activity):BottomSheetDialogFragment() {
+class ProfileFragment (private val context: Context, private val activity: Activity):BottomSheetDialogFragment(), UserAuthListener {
+
+    private var viewModel : UserAuthViewModel? = null
+    private var btnLogOut :Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val networkConnectionInterceptor = NetworkConnectionInterceptor()
+        val api = MyApi(networkConnectionInterceptor)
+        val sharedPreferences = MySharedPreferences(requireContext())
+        val userRepository = UserRepository(api, sharedPreferences)
+        val factory = UserAuthViewModelFactory(userRepository)
+        viewModel = ViewModelProvider(this, factory).get(UserAuthViewModel::class.java)
+        viewModel?.authListener = this
     }
 
     override fun onCreateView(
@@ -26,6 +47,14 @@ class ProfileFragment (private val context: Context, private val activity: Activ
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        btnLogOut = view.findViewById(R.id.button_logOut)
+
+        btnLogOut?.setOnClickListener {
+            viewModel?.userClearToken()
+
+        }
+
 
         return view
     }
@@ -42,5 +71,21 @@ class ProfileFragment (private val context: Context, private val activity: Activ
         }
 
         return dialog
+    }
+
+    override fun onStartAuth() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccessAuth(user: UserLogInResponseModel.User) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFailAuth(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignUpSuccess(model: UserSignUpModel) {
+        TODO("Not yet implemented")
     }
 }
