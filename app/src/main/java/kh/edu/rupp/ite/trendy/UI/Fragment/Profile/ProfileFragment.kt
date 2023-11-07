@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kh.edu.rupp.ite.trendy.Custom.DialogX
 import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpModel
@@ -21,6 +22,7 @@ import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.UI.Activity.SplashScreenActivity
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthListener
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModelFactory
@@ -51,7 +53,15 @@ class ProfileFragment (private val context: Context, private val activity: Activ
         btnLogOut = view.findViewById(R.id.button_logOut)
 
         btnLogOut?.setOnClickListener {
-            viewModel?.userClearToken()
+            DialogX(requireContext()).showQuestion(
+                requireContext().getString(R.string.are_you_sure),
+                requireContext().getString(R.string.log_out_qs)
+            ){
+                viewModel?.userClearToken()
+                dismiss()
+                SplashScreenActivity.lunch(requireContext())
+                activity.finish()
+            }
 
         }
 
