@@ -1,5 +1,8 @@
 package kh.edu.rupp.ite.trendy.UI.Main
 
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +26,8 @@ import kh.edu.rupp.ite.trendy.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
     private var STATE = 0
+    private var doubleBackToExitPressedOnce = false
+
     override fun getLayoutViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
     override fun initView() {
         setStatusBarColor(ActivityCompat.getColor(this, R.color.indicator))
@@ -96,6 +101,21 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
         fragmentTransaction.commit()
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount>0){
+            supportFragmentManager.popBackStack()
+        }else if(!doubleBackToExitPressedOnce){
+
+            doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "Please click BACK again to exit.", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                doubleBackToExitPressedOnce = false
+            }, 2000)
+        }else{
+            super.onBackPressed()
+            return
+        }
+    }
 
     override fun onResume() {
         super.onResume()

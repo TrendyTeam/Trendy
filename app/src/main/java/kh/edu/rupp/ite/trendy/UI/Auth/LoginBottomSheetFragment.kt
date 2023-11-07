@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -24,6 +25,7 @@ import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.UI.Activity.SplashScreenActivity
 import kh.edu.rupp.ite.trendy.Util.hideKeyboard
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthListener
 import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModel
@@ -35,6 +37,7 @@ class LoginBottomSheetFragment(private val context: Context, private val activit
     private var btnClose : ImageView?=null
     private var btnRegister: Button? = null
     private var btnLogin: Button? = null
+    private var loadingProgress: LottieAnimationView? = null
     private var edtPhone: TextInputEditText? = null
     private var edtPassword: TextInputEditText? = null
     private var viewModel:UserAuthViewModel? =null
@@ -63,6 +66,7 @@ class LoginBottomSheetFragment(private val context: Context, private val activit
         edtPhone = view.findViewById(R.id.phoneTxtEdt)
         edtPassword = view.findViewById(R.id.passwordTxtEdt)
         btnLogin = view.findViewById(R.id.button_login)
+        loadingProgress = view.findViewById(R.id.loading)
         btnRegister?.setOnClickListener {
             val bottomSheet = SignUpBottomSheetFragment(requireContext(), activity)
             bottomSheet.show(requireActivity().supportFragmentManager, "bottom_sheet_signup_fragment")
@@ -115,15 +119,19 @@ class LoginBottomSheetFragment(private val context: Context, private val activit
     }
 
     override fun onStartAuth() {
-
+        loadingProgress!!.visibility = View.VISIBLE
     }
 
     override fun onSuccessAuth(user: UserLogInResponseModel.User) {
         Toast.makeText(context, "${user.username} is login ....", Toast.LENGTH_SHORT).show()
+        SplashScreenActivity.lunch(requireContext())
+        activity.finish()
+        loadingProgress!!.visibility = View.GONE
     }
 
     override fun onFailAuth(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        loadingProgress!!.visibility = View.GONE
     }
 
     override fun onSignUpSuccess(model: UserSignUpModel) {
