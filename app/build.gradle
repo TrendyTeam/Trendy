@@ -75,6 +75,9 @@ dependencies {
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.3.3'
     implementation 'org.kodein.di:kodein-di-framework-android-x:6.3.3'
 
+    //circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     //lottie animation
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"

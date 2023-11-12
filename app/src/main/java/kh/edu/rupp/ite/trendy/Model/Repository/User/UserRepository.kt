@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.trendy.Model.Repository.User
 
 import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpBody
@@ -28,5 +29,9 @@ class UserRepository(
         return sharedPreferences.getToken()
     }
     suspend fun clareToken() = sharedPreferences.clearToken()
+
+    suspend fun getUserDetail() : UserDetailModel{
+        return apiRequest { api.getUserDetail() }
+    }
 
 }
