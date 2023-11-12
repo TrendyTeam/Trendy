@@ -1,10 +1,12 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
+import android.content.Context
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpModel
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.Service.network.TokenInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -31,10 +33,13 @@ interface MyApi {
 
     companion object{
         operator fun invoke(
-            networkConnectionInterceptor: NetworkConnectionInterceptor
+            networkConnectionInterceptor: NetworkConnectionInterceptor,
+            context: Context
         ) :MyApi{
+            val tokenInterceptor = TokenInterceptor(context)
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor)
+                .addInterceptor(tokenInterceptor)
                 .build()
             return Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:5001/api/")

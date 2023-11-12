@@ -35,7 +35,7 @@ class ProfileFragment (private val context: Context, private val activity: Activ
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val networkConnectionInterceptor = NetworkConnectionInterceptor()
-        val api = MyApi(networkConnectionInterceptor)
+        val api = MyApi(networkConnectionInterceptor, requireContext())
         val sharedPreferences = MySharedPreferences(requireContext())
         val userRepository = UserRepository(api, sharedPreferences)
         val factory = UserAuthViewModelFactory(userRepository)
