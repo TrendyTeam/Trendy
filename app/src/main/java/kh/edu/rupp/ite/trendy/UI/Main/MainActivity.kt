@@ -32,7 +32,7 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
     override fun initView() {
         setStatusBarColor(ActivityCompat.getColor(this, R.color.indicator))
         val networkConnectionInterceptor = NetworkConnectionInterceptor()
-        val api = MyApi(networkConnectionInterceptor)
+        val api = MyApi(networkConnectionInterceptor, this)
         val sharedPreferences = MySharedPreferences(this)
         val userRepository = UserRepository(api, sharedPreferences)
         val factory = UserAuthViewModelFactory(userRepository)
