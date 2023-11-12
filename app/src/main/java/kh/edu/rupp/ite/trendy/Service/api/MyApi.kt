@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
 import android.content.Context
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserSignUpBody
@@ -12,6 +13,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface MyApi {
@@ -26,16 +28,17 @@ interface MyApi {
     @POST("user/create")
     suspend fun userSignUp(
         @Body info: UserSignUpBody
-    ):Response<UserSignUpModel>
+    ): Response<UserSignUpModel>
+
+    @GET("/user/get-one")
+    suspend fun getUserDetail(): Response<UserDetailModel>
 
 
-
-
-    companion object{
+    companion object {
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor,
             context: Context
-        ) :MyApi{
+        ): MyApi {
             val tokenInterceptor = TokenInterceptor(context)
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor)

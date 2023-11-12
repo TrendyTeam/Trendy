@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -31,6 +33,8 @@ class ProfileFragment (private val context: Context, private val activity: Activ
 
     private var viewModel : UserAuthViewModel? = null
     private var btnLogOut :Button? = null
+    private  var username : TextView? = null
+    private var phoneNumber : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,7 @@ class ProfileFragment (private val context: Context, private val activity: Activ
         val factory = UserAuthViewModelFactory(userRepository)
         viewModel = ViewModelProvider(this, factory).get(UserAuthViewModel::class.java)
         viewModel?.authListener = this
+        viewModel?.getUserDetail()
     }
 
     override fun onCreateView(
@@ -50,7 +55,10 @@ class ProfileFragment (private val context: Context, private val activity: Activ
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+
         btnLogOut = view.findViewById(R.id.button_logOut)
+        username = view.findViewById(R.id.username)
+        phoneNumber = view.findViewById(R.id.phoneNumber)
 
         btnLogOut?.setOnClickListener {
             DialogX(requireContext()).showQuestion(
@@ -64,6 +72,12 @@ class ProfileFragment (private val context: Context, private val activity: Activ
             }
 
         }
+
+        viewModel?.userDetailData?.observe(this, Observer {
+            username?.text = it.user?.username
+            phoneNumber?.text = it.user?.phone
+        })
+
 
 
         return view

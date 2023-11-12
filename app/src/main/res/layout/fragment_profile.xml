@@ -44,10 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/progile_image" />
+                android:src="@drawable/profile_image" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -57,18 +57,16 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kboy"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/email"
+                    android:id="@+id/phoneNumber"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kboy@gmail.com" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

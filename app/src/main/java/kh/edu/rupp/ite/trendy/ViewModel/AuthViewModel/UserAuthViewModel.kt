@@ -3,6 +3,7 @@ package kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.Util.ApiException
 import kh.edu.rupp.ite.trendy.Util.Coroutines
@@ -13,9 +14,16 @@ class UserAuthViewModel(
     private val userRepository: UserRepository
 ):ViewModel() {
     private val _token = MutableLiveData<String>()
+    private val _userDetailData = MutableLiveData<UserDetailModel>()
+
     val token : LiveData<String>
         get() = _token
     var authListener:UserAuthListener? = null
+
+
+    //get user data
+    val userDetailData : LiveData<UserDetailModel>
+        get() = _userDetailData
 
     //get user token
      fun loadToken(){
@@ -89,6 +97,17 @@ class UserAuthViewModel(
                 logCus("${e.message}")
             }
         }
+    }
+
+    fun  getUserDetail() {
+        Coroutines.ioThanMain(
+            {
+                userRepository.getUserDetail()
+            },
+            {
+                _userDetailData.value = it
+            }
+        )
     }
 
 
