@@ -30,7 +30,7 @@ interface MyApi {
         @Body info: UserSignUpBody
     ): Response<UserSignUpModel>
 
-    @GET("/user/get-one")
+    @GET("user/get-one")
     suspend fun getUserDetail(): Response<UserDetailModel>
 
 
@@ -45,7 +45,7 @@ interface MyApi {
                 .addInterceptor(tokenInterceptor)
                 .build()
             return Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5001/api/")
+                .baseUrl("http://52.221.209.156:5001/api/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
