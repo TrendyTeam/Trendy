@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,7 @@ class ProfileFragment (private val context: Context, private val activity: Activ
     private var btnLogOut :Button? = null
     private  var username : TextView? = null
     private var phoneNumber : TextView? = null
+    private var backBtn : ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ class ProfileFragment (private val context: Context, private val activity: Activ
         btnLogOut = view.findViewById(R.id.button_logOut)
         username = view.findViewById(R.id.username)
         phoneNumber = view.findViewById(R.id.phoneNumber)
+        backBtn = view.findViewById(R.id.back_btn)
 
         btnLogOut?.setOnClickListener {
             DialogX(requireContext()).showQuestion(
@@ -77,6 +80,9 @@ class ProfileFragment (private val context: Context, private val activity: Activ
             username?.text = it.user?.username
             phoneNumber?.text = it.user?.phone
         })
+
+
+        backBtn?.setOnClickListener { dismiss()}
 
 
 

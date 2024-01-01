@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android1="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/appbarCus"
-    android:background="@color/primary"
+    android:fitsSystemWindows="true"
+    android:background="@color/buttonColor"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:layout_height="?attr/actionBarSize">
+    android:layout_height="94dp">
 
            <RelativeLayout
                android:layout_width="match_parent"
@@ -26,8 +26,7 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:fontFamily="@font/segoe_bold"
-                           android:text="KUNAPHEAP STORE"
+                           android:text="@string/trendy_fashion"
                            android:textColor="@color/white"
                            android:textSize="18sp" />
                    </LinearLayout>
@@ -39,19 +38,22 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content">
                        <ImageButton
-                           android:src="@drawable/ic_baseline_search_24"
-                           android:background="@color/transparent"
+                           android:visibility="gone"
+                           android:src="@drawable/ic_heart"
+                           android:background="@color/tran"
                            android:layout_gravity="center"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"/>
                        <ImageButton
-                           android:id="@+id/notiOn"
-                           android:background="@color/transparent"
-                           android:src="@drawable/ic_baseline_notifications_24"
-                           android:layout_width="30dp"
-                           android:layout_height="40dp"/>
+                           android:id="@+id/ic_end"
+                           android:background="@color/tran"
+                           android:layout_marginEnd="5dp"
+                           android:src="@drawable/ic_baseline_close_24"
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           app:tint="@color/white" />
                    </LinearLayout>
                </LinearLayout>
            </RelativeLayout>
 
-</Toolbar>
+</com.google.android.material.appbar.AppBarLayout>
