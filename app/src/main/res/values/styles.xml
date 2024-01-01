@@ -16,4 +16,14 @@
         <item name="android:textColorSecondary">@color/black</item>
     </style>
 
+    <style name="appBarTitleStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title
+        </item>
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>

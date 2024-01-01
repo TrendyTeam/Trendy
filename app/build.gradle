@@ -78,6 +78,9 @@ dependencies {
     //circle image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //image slider
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
+
     //lottie animation
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
