@@ -45,8 +45,6 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
         initBottomNavigate(viewModel)
 
     }
-
-
     private fun initBottomNavigate(viewModel: UserAuthViewModel){
         binding.bottomNavigation.setOnItemSelectedListener { item->
             when(item.itemId){
@@ -92,15 +90,12 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
 
         }
     }
-
-
     private fun showFragment(fragment:Fragment){
         val fragmentManger = supportFragmentManager
         val fragmentTransaction = fragmentManger.beginTransaction()
         fragmentTransaction.replace((R.id.container), fragment )
         fragmentTransaction.commit()
     }
-
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount>0){
             supportFragmentManager.popBackStack()
@@ -116,7 +111,6 @@ class MainActivity : BaseActivityBinding<ActivityMainBinding>() {
             return
         }
     }
-
     override fun onResume() {
         super.onResume()
 
