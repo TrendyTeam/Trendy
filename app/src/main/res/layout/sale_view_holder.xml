@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
@@ -7,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:layout_width="150dp"
@@ -26,17 +28,29 @@
             android:textColor="@color/white"
             android:textAlignment="center" />
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="155dp"
+            android:layout_marginEnd="249dp"
+            android:background="@drawable/cart_button_round"
+            android:src="@drawable/ic_baseline_favorite" />
+
     </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:text="Dorothy Perkins"
+        android:id="@+id/home_product_name"
         android:textColor="@color/textGray"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="wrap_content"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:id="@+id/home_product_title"
         android:text="Evening Dress"
         android:layout_height="wrap_content"/>
 
@@ -49,11 +63,13 @@
             android:layout_width="wrap_content"
             android:text="15$"
             android:textColor="@color/textGray"
+            android:id="@+id/original_price"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_marginLeft="5sp"
+            android:id="@+id/discount_price"
             android:textColor="@color/buttonColor"
             android:text="12$"
             android:layout_height="wrap_content"/>

@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:text="api"
             android:textStyle="bold"
+            android:id="@+id/total_price_data"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
