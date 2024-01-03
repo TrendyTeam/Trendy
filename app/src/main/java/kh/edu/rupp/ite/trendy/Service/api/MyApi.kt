@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
 import android.content.Context
+import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
@@ -32,6 +33,9 @@ interface MyApi {
 
     @GET("user/get-one")
     suspend fun getUserDetail(): Response<UserDetailModel>
+
+    @GET("products")
+    suspend fun getProductList() : Response<ProductListModel>
 
 
     companion object {
