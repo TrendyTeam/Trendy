@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="150dp"
     android:orientation="vertical"
     android:layout_marginEnd="10dp"
     android:layout_height="wrap_content">
@@ -12,9 +12,12 @@
         tools:ignore="UselessParent">
 
         <ImageView
-            android:layout_width="150dp"
+            android:id="@+id/cover_image"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/test_data" />
+            android:src="@drawable/test_data"
+            android:scaleType="fitCenter"
+            android:importantForAccessibility="no" />
 
         <TextView
             android:id="@+id/percent_tag"
@@ -29,16 +32,6 @@
             android:textColor="@color/white"
             android:textAlignment="center" />
 
-<!--        <ImageView-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="155dp"-->
-<!--            android:layout_marginEnd="249dp"-->
-<!--            android:background="@drawable/cart_button_round"-->
-<!--            android:src="@drawable/ic_baseline_favorite" />-->
-
     </RelativeLayout>
 
     <TextView
@@ -48,7 +41,6 @@
         android:id="@+id/home_product_name"
         android:text="Evening Dress"
         android:layout_height="wrap_content"/>
-
 
     <LinearLayout
         android:layout_width="wrap_content"
