@@ -16,7 +16,7 @@ class ProductListModel : ArrayList<ProductListModel.ProductListModelItem>(){
         @SerializedName("id")
         var id: Int?,
         @SerializedName("image")
-        var image: List<Any?>?,
+        var image: List<Image?>?,
         @SerializedName("items")
         var items: List<Item?>?,
         @SerializedName("product_discount")
@@ -52,6 +52,21 @@ class ProductListModel : ArrayList<ProductListModel.ProductListModelItem>(){
                 var colorCode: String?
             )
         }
+    
+        data class Image(
+            @SerializedName("color")
+            var color: String?,
+            @SerializedName("color_code")
+            var colorCode: String?,
+            @SerializedName("image_id")
+            var imageId: Int?,
+            @SerializedName("image_onColor")
+            var imageOnColor: String?,
+            @SerializedName("image_url")
+            var imageUrl: String?,
+            @SerializedName("public_id")
+            var publicId: String?
+        )
     
         data class Item(
             @SerializedName("amount")

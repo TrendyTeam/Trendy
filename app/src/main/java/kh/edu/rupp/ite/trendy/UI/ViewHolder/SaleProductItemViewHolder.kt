@@ -1,9 +1,9 @@
 package kh.edu.rupp.ite.trendy.UI.ViewHolder
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.UI.Adapter.SaleProductItemAdapter
 import kh.edu.rupp.ite.trendy.databinding.SaleViewHolderBinding
@@ -19,6 +19,7 @@ class SaleProductItemViewHolder(
         binding.homeProductName.text = item.productName
 //        binding.discountPrice.text = item.productDiscount.toString()
         binding.originalPrice.text = "$ ${item.productPrice}"
+        Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
 
 
         if (item.productDiscount == 0) {

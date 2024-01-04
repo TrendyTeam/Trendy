@@ -3,7 +3,6 @@ package kh.edu.rupp.ite.trendy.UI.Adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.SearchView.OnCloseListener
 import androidx.recyclerview.widget.RecyclerView
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.R

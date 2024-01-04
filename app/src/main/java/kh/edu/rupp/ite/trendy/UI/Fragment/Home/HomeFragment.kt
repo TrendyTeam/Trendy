@@ -1,27 +1,18 @@
 package kh.edu.rupp.ite.trendy.UI.Fragment.Home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kh.edu.rupp.ite.trendy.Base.BaseFragmentBinding
-import kh.edu.rupp.ite.trendy.Model.DataBase.MySharedPreferences
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Product.ProductRepository
-import kh.edu.rupp.ite.trendy.Model.Repository.User.UserRepository
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.SaleProductItemAdapter
-import kh.edu.rupp.ite.trendy.ViewModel.AuthViewModel.UserAuthViewModelFactory
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.FragmentHomeBinding
@@ -68,7 +59,6 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                             position: Int
                         ) {
                         }
-
                     })
             }
         })
