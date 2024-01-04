@@ -13,10 +13,8 @@ class ProductViewModel(
 
     private  val _productList = MutableLiveData<ProductListModel>()
 
-
     val productList: LiveData<ProductListModel>
         get() = _productList
-
 
     fun getProductList() {
         Coroutines.ioThanMain(
@@ -28,5 +26,4 @@ class ProductViewModel(
             }
         )
     }
-
 }

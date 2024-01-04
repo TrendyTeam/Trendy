@@ -12,6 +12,7 @@ import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Product.ProductRepository
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.UI.Adapter.NewProductItemAdapter
 import kh.edu.rupp.ite.trendy.UI.Adapter.SaleProductItemAdapter
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModelFactory
@@ -62,6 +63,25 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                     })
             }
         })
+
+        viewModel?.productList?.observe(viewLifecycleOwner, Observer {
+            binding.neverSeenBeforeRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = NewProductItemAdapter(
+                    context,
+                    it,
+                    object : NewProductItemAdapter.OnClickListener {
+                        override fun onClickListener(
+                            data: ProductListModel.ProductListModelItem,
+                            position: Int
+                        ) {
+                        }
+
+                    }
+                )
+            }
+        })
+
 
     }
 
