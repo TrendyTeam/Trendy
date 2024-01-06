@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import kh.edu.rupp.ite.trendy.Base.BaseFragmentBinding
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Product.ProductRepository
@@ -45,6 +47,14 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
 
     override fun onViewCreated() {
 
+        val imageSlider = binding.imageSlider
+        val imageList = ArrayList<SlideModel>()
+
+        // Add your image URLs and corresponding descriptions here
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "T-Shirt"))
+        imageList.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds", "Armani Suit"))
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+
         //get data form api
         viewModel?.productList?.observe(viewLifecycleOwner, Observer {
 //            Log.d("PRODUCT", "Data: $it")
@@ -81,6 +91,16 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                 )
             }
         })
+
+//        val imageList = ArrayList<SlideModel>() // Create image list
+//        imageList.add(SlideModel("https://t.ly/aaa_", "The future is our hands."))
+//        imageList.add(SlideModel("https://t.ly/sg91", "Climate change is moving very fast."))
+//        imageList.add(SlideModel("https://t.ly/hqW3", "The population has decreased by 27 percent in the last 5 years."))
+//
+//        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+//
+//        imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
+
 
 
     }
