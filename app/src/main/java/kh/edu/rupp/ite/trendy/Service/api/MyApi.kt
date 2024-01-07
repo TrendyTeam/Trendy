@@ -1,6 +1,8 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
 import android.content.Context
+import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
+import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
@@ -15,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface MyApi {
 
@@ -32,6 +35,14 @@ interface MyApi {
 
     @GET("user/get-one")
     suspend fun getUserDetail(): Response<UserDetailModel>
+
+    @GET("categories")
+    suspend fun getTopCategory(): Response<TopCategoryModel>
+
+    @GET("categories/{id}/subcategories")
+    suspend fun getSubCategory(
+        @Path("id") id: String
+    ): Response<SubCategoryModel>
 
 
     companion object {
