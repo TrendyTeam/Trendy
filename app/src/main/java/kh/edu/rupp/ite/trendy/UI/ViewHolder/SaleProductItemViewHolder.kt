@@ -19,10 +19,7 @@ class SaleProductItemViewHolder(
         binding.homeProductName.text = item.productName
         binding.discountPrice.text = "$ ${item.productDiscount}"
         binding.originalPrice.text = "$ ${item.productPrice}"
-        if (item.image!!.isNotEmpty()){
-            Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
-
-        }
+        Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
 
 
         if (item.productDiscount == 0) {
