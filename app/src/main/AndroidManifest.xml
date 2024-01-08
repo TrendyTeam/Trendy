@@ -21,6 +21,9 @@
         android:theme="@style/Theme.Trendy"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Activity.ProductListActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.Activity.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
