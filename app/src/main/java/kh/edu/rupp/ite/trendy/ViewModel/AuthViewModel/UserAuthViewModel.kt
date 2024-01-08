@@ -25,6 +25,7 @@ class UserAuthViewModel(
     val userDetailData : LiveData<UserDetailModel>
         get() = _userDetailData
 
+
     //get user token
      fun loadToken(){
         val token = userRepository.getToken()
