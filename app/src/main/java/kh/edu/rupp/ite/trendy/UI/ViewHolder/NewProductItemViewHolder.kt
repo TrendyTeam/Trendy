@@ -7,7 +7,6 @@ import com.squareup.picasso.Picasso
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.UI.Adapter.NewProductItemAdapter
 import kh.edu.rupp.ite.trendy.databinding.SaleViewHolderBinding
-import java.text.FieldPosition
 
 class NewProductItemViewHolder(
     itemView: View,
@@ -21,7 +20,9 @@ class NewProductItemViewHolder(
         binding.homeProductName.text = item.productName
         binding.discountPrice.text = "$ ${item.productDiscount}"
         binding.originalPrice.text = "$ ${item.productPrice}"
-        Picasso.get().load(item.image!![1]?.imageUrl).into(binding.coverImage)
+        if (item.image!!.isNotEmpty()){
+            Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
+        }
 
         if (item.productDiscount == 0) {
             binding.percentTag.visibility = View.GONE

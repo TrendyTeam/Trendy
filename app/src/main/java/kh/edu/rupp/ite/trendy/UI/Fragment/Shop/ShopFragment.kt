@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.tabs.TabLayoutMediator
 import kh.edu.rupp.ite.trendy.Base.BaseFragmentBinding
+import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.Util.BaseTabBase
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.FragmentShopBinding
@@ -34,10 +37,26 @@ class ShopFragment : BaseFragmentBinding<FragmentShopBinding>() {
 
         viewModel?.topCategoryData?.observe(viewLifecycleOwner, Observer {
             Log.d("CATEGORY", "category = $it")
-
+            setUpTab(it, BaseTabBase(requireActivity(),it))
 
         }) 
 
+
+    }
+
+    private fun setUpTab(data: TopCategoryModel, adapter: BaseTabBase){
+
+        binding.vwSr.adapter = adapter
+        val tabLayout = TabLayoutMediator(
+            binding.tabSr,
+            binding.vwSr
+        ){tab, pos ->
+
+            tab.text = data[pos].name
+
+        }
+
+        tabLayout.attach()
 
     }
 
