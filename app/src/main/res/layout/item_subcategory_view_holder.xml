@@ -25,7 +25,9 @@
         <ImageView
             android:id="@+id/imageSubCategory"
             android:layout_weight="1"
+            android:src="@drawable/test_data"
             android:layout_width="0dp"
+            android:scaleType="fitCenter"
             android:layout_height="match_parent"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
