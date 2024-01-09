@@ -16,7 +16,7 @@ class BaseTabBase(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return BaseSubCategoryFragment(data[position].id)
+        return BaseSubCategoryFragment(data[position].id, data[position].name)
     }
 
 }

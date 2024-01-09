@@ -34,13 +34,11 @@ class ShopFragment : BaseFragmentBinding<FragmentShopBinding>() {
         viewModel?.getTopCategoryData()
     }
     override fun onViewCreated() {
-
         viewModel?.topCategoryData?.observe(viewLifecycleOwner, Observer {
             Log.d("CATEGORY", "category = $it")
             setUpTab(it, BaseTabBase(requireActivity(),it))
 
         }) 
-
 
     }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
+import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
 import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
 import kh.edu.rupp.ite.trendy.Util.Coroutines
 
@@ -20,6 +21,10 @@ class CategoryViewModel (
 
     val subCategoryData : LiveData<SubCategoryModel>
         get() = _subCategoryData
+
+    private val _listProductByCategory = MutableLiveData<ListProductWithDetailByCategory>()
+    val listProductByCategory : LiveData<ListProductWithDetailByCategory>
+        get() = _listProductByCategory
 
 
 
@@ -43,6 +48,13 @@ class CategoryViewModel (
             {
                 _subCategoryData.value = it
             }
+        )
+    }
+
+    fun getListProductByCategory(id: String){
+        Coroutines.ioThanMain(
+            {categoryRepository.getProductByCategory(id)},
+            {_listProductByCategory.value = it}
         )
     }
 

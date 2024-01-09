@@ -11,10 +11,23 @@
         <item name="android:color">@color/indicator</item>
     </style>
 
+
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorAccent">@color/buttonColor</item>
         <item name="android:textColorSecondary">@color/black</item>
     </style>
+
+    <style name="btnBackAppbarStyle">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="background">?selectableItemBackgroundBorderless</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="tint">@color/buttonColor</item>
+    </style>
+
 
     <style name="appBarTitleStyle">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title
