@@ -3,6 +3,7 @@ package kh.edu.rupp.ite.trendy.Service.api
 import android.content.Context
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
+import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
@@ -45,6 +46,11 @@ interface MyApi {
     ): Response<SubCategoryModel>
     @GET("products")
     suspend fun getProductList() : Response<ProductListModel>
+    @GET("products-detail-by-subcategory/{id}")
+    suspend fun getProductByCategory(
+        @Path("id") id : String
+    ):Response<ListProductWithDetailByCategory>
+
 
 
     companion object {
