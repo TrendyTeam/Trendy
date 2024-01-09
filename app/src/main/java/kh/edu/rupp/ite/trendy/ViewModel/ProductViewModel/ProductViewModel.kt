@@ -8,10 +8,10 @@ import kh.edu.rupp.ite.trendy.Model.Repository.Product.ProductRepository
 import kh.edu.rupp.ite.trendy.Util.Coroutines
 
 class ProductViewModel(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
 ) : ViewModel() {
 
-    private  val _productList = MutableLiveData<ProductListModel>()
+    private val _productList = MutableLiveData<ProductListModel>()
 
     val productList: LiveData<ProductListModel>
         get() = _productList

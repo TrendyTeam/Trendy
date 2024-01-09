@@ -17,7 +17,7 @@ class NewProductItemAdapter(
 ) : RecyclerView.Adapter<NewProductItemViewHolder>() {
 
     interface OnClickListener {
-        fun onClickListener(data: ProductListModel.ProductListModelItem, position: Int)
+        fun onClickListener(data: ProductListModel.ProductListModelItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewProductItemViewHolder {

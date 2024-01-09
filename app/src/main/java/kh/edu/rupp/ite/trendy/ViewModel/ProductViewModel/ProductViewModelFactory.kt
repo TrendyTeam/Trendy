@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import kh.edu.rupp.ite.trendy.Model.Repository.Product.ProductRepository
 
 class ProductViewModelFactory(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

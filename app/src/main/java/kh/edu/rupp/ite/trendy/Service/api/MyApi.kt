@@ -38,6 +38,7 @@ interface MyApi {
 
     @GET("user/get-one")
     suspend fun getUserDetail(): Response<UserDetailModel>
+
     @GET("categories")
     suspend fun getTopCategory(): Response<TopCategoryModel>
 
@@ -45,16 +46,19 @@ interface MyApi {
     suspend fun getSubCategory(
         @Path("id") id: String
     ): Response<SubCategoryModel>
+
     @GET("products")
-    suspend fun getProductList() : Response<ProductListModel>
+    suspend fun getProductList(): Response<ProductListModel>
+
     @GET("products-detail-by-subcategory/{id}")
     suspend fun getProductByCategory(
-        @Path("id") id : String
-    ):Response<ListProductWithDetailByCategory>
-
+        @Path("id") id: String
+    ): Response<ListProductWithDetailByCategory>
 
     @GET("products/get-one/{id}")
-    suspend fun getOneProduct() : Response<OneProductModel>
+    suspend fun getOneProduct(
+        @Path("id") id: String
+    ): Response<OneProductModel>
 
 
     companion object {

@@ -16,6 +16,8 @@ import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.NewProductItemAdapter
 import kh.edu.rupp.ite.trendy.UI.Adapter.SaleProductItemAdapter
+import kh.edu.rupp.ite.trendy.UI.Fragment.Detail.ProductDetail
+import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.FragmentHomeBinding
@@ -51,8 +53,8 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
         val imageList = ArrayList<SlideModel>()
 
         // Add your image URLs and corresponding descriptions here
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "T-Shirt"))
-        imageList.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds", "Armani Suit"))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
+        imageList.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds"))
         imageSlider.setImageList(imageList, ScaleTypes.FIT)
 
         //get data form api
@@ -85,12 +87,18 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                             data: ProductListModel.ProductListModelItem,
                             position: Int
                         ) {
+                            val productDetailBottomSheet = ProductDetail(data.id.toString())
+                            productDetailBottomSheet.show(
+                                requireActivity().supportFragmentManager,
+                                "button_sheet_product_detail"
+                            )
+                            context.toastHelper("Hhhh")
                         }
-
                     }
                 )
             }
         })
+
 
 //        val imageList = ArrayList<SlideModel>() // Create image list
 //        imageList.add(SlideModel("https://t.ly/aaa_", "The future is our hands."))
@@ -100,7 +108,6 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
 //        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
 //
 //        imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-
 
 
     }
