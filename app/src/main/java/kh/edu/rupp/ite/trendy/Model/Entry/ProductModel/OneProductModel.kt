@@ -18,8 +18,11 @@ data class OneProductModel(
     var image: List<Image?>?,
     @SerializedName("items")
     var items: List<Item?>?,
+    @SerializedName("product_description")
+    var productDescription: String? = "",
     @SerializedName("product_discount")
     var productDiscount: Int? = 0,
+
     @SerializedName("product_name")
     var productName: String? = "",
     @SerializedName("product_price")

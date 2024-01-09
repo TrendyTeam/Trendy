@@ -83,7 +83,7 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                     it,
                     object : NewProductItemAdapter.OnClickListener {
                         override fun onClickListener(data: ProductListModel.ProductListModelItem) {
-                            val productDetailBottomSheet = ProductDetail(data.id.toString())
+                            val productDetailBottomSheet = ProductDetail(data.id.toString(), data.productName.toString())
                             productDetailBottomSheet.show(
                                 requireActivity().supportFragmentManager,
                                 "button_sheet_product_detail"
