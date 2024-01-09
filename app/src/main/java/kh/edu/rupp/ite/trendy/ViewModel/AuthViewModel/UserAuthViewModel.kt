@@ -12,40 +12,37 @@ import kh.edu.rupp.ite.trendy.Util.logCus
 
 class UserAuthViewModel(
     private val userRepository: UserRepository
-):ViewModel() {
+) : ViewModel() {
     private val _token = MutableLiveData<String>()
     private val _userDetailData = MutableLiveData<UserDetailModel>()
 
-    val token : LiveData<String>
+    val token: LiveData<String>
         get() = _token
-    var authListener:UserAuthListener? = null
-
+    var authListener: UserAuthListener? = null
 
     //get user data
-    val userDetailData : LiveData<UserDetailModel>
+    val userDetailData: LiveData<UserDetailModel>
         get() = _userDetailData
 
-
     //get user token
-     fun loadToken(){
+    fun loadToken() {
         val token = userRepository.getToken()
         _token.value = token ?: ""
     }
 
-    private suspend fun saveToken(token:String){
+    private suspend fun saveToken(token: String) {
         userRepository.saveToken(token)
         loadToken()
     }
 
-    suspend fun clearToken(){
+    suspend fun clearToken() {
         userRepository.clareToken()
         loadToken()
     }
 
-
-    fun userLogIn(phone: String, password: String){
+    fun userLogIn(phone: String, password: String) {
         authListener?.onStartAuth()
-        if (phone.isEmpty() || password.isEmpty()){
+        if (phone.isEmpty() || password.isEmpty()) {
             authListener?.onFailAuth("Invalid Phone or Password")
             return
         }
@@ -57,50 +54,48 @@ class UserAuthViewModel(
                     saveToken(authRepository.accessToken!!)
                     return@main
                 }
-            }catch (e: ApiException){
+            } catch (e: ApiException) {
                 authListener?.onFailAuth(e.message!!)
-            }
-            catch (e: NoInternetException){
+            } catch (e: NoInternetException) {
                 authListener?.onFailAuth(e.message!!)
             }
         }
     }
 
-    fun userSignUp(username: String, phone: String, password: String, gender: Int){
+    fun userSignUp(username: String, phone: String, password: String, gender: Int) {
         authListener?.onStartAuth()
-        if (phone.isEmpty() || password.isEmpty() || username.isEmpty() || gender == 0){
+        if (phone.isEmpty() || password.isEmpty() || username.isEmpty() || gender == 0) {
             authListener?.onFailAuth("Please complete all field.")
             return
         }
         Coroutines.main {
             try {
-                val authRepository = userRepository.userSignUp(username,phone,password,gender)
+                val authRepository = userRepository.userSignUp(username, phone, password, gender)
                 authRepository.error.let {
-                    if (it == false){
-                       authListener?.onSignUpSuccess(authRepository)
+                    if (it == false) {
+                        authListener?.onSignUpSuccess(authRepository)
                         return@main
                     }
                 }
-            }catch (e:ApiException){
+            } catch (e: ApiException) {
                 authListener?.onFailAuth(e.message!!)
-            }
-            catch (e:NoInternetException){
+            } catch (e: NoInternetException) {
                 authListener?.onFailAuth(e.message!!)
             }
         }
     }
 
-    fun userClearToken(){
+    fun userClearToken() {
         Coroutines.main {
             try {
                 clearToken()
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 logCus("${e.message}")
             }
         }
     }
 
-    fun  getUserDetail() {
+    fun getUserDetail() {
         Coroutines.ioThanMain(
             {
                 userRepository.getUserDetail()
@@ -110,7 +105,4 @@ class UserAuthViewModel(
             }
         )
     }
-
-
-
 }
