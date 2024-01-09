@@ -48,6 +48,8 @@
     <string name="view_more">View more</string>
     <string name="never_seen_before">You have never seen before!</string>
     <string name="filter">Filter</string>
-
-
+    <string name="copyright">© 2024 Trendy Team. All rights reserved.</string>
+    <string name="size">Size</string>
+    <string name="color">Color</string>
+    <string name="add_to_cart">Add To Cart</string>
 </resources>
