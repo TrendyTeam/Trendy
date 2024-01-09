@@ -17,7 +17,6 @@ import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.NewProductItemAdapter
 import kh.edu.rupp.ite.trendy.UI.Adapter.SaleProductItemAdapter
 import kh.edu.rupp.ite.trendy.UI.Fragment.Detail.ProductDetail
-import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.ProductViewModel.ProductViewModelFactory
 import kh.edu.rupp.ite.trendy.databinding.FragmentHomeBinding
@@ -83,16 +82,12 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                     context,
                     it,
                     object : NewProductItemAdapter.OnClickListener {
-                        override fun onClickListener(
-                            data: ProductListModel.ProductListModelItem,
-                            position: Int
-                        ) {
+                        override fun onClickListener(data: ProductListModel.ProductListModelItem) {
                             val productDetailBottomSheet = ProductDetail(data.id.toString())
                             productDetailBottomSheet.show(
                                 requireActivity().supportFragmentManager,
                                 "button_sheet_product_detail"
                             )
-                            context.toastHelper("Hhhh")
                         }
                     }
                 )
