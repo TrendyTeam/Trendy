@@ -16,7 +16,7 @@ class ListProductByCategoryModel : ArrayList<ListProductByCategoryModel.ListProd
         @SerializedName("id")
         var id: Int = 0,
         @SerializedName("product_discount")
-        var productDiscount: Any = Any(),
+        var productDiscount: Double? = 0.0,
         @SerializedName("product_name")
         var productName: String = "",
         @SerializedName("product_price")

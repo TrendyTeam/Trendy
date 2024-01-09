@@ -26,11 +26,13 @@ import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.ProductListAdapterForGridLayout
+import kh.edu.rupp.ite.trendy.UI.Adapter.ProductListAdapterForListLayout
 import kh.edu.rupp.ite.trendy.UI.Adapter.SubCategoryListHorizontalAdapter
 import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModelFactory
 import kotlinx.android.synthetic.main.product_list_layout.view.btnBack
+import kotlinx.android.synthetic.main.product_list_layout.view.list_change
 import kotlinx.android.synthetic.main.product_list_layout.view.product_list
 import kotlinx.android.synthetic.main.product_list_layout.view.subCategory_rec
 import kotlinx.android.synthetic.main.product_list_layout.view.titleCategory
@@ -42,9 +44,10 @@ class ProductListByCategory(private val context: Context, private val handleData
     private var recyclerViewSubCategory : RecyclerView? = null
     private var viewModel : CategoryViewModel? = null
     private var recyForProduct: RecyclerView? = null
+    private var layoutChange: ImageView? = null
     private var subCategoryId:String? = ""
     private var subCategoryName: String? = ""
-
+    private var grid = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,39 +75,86 @@ class ProductListByCategory(private val context: Context, private val handleData
         val view = inflater.inflate(R.layout.product_list_layout, container, false)
         title = view.titleCategory
         backBtn = view.btnBack
+        layoutChange = view.list_change
         recyclerViewSubCategory = view.subCategory_rec
         recyForProduct = view.product_list
-        title?.text = "${handleDataModel.categoryNameHandle}'s ${handleDataModel.subCategoryName}"
-        if (handleDataModel.isViewByCategory == true){
-            viewModel?.subCategoryData?.observe(viewLifecycleOwner, Observer {
-                recyclerViewSubCategory?.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = SubCategoryListHorizontalAdapter(context, it, object :SubCategoryListHorizontalAdapter.OnSubCategoryClick{
-                        override fun onItemClick(data: SubCategoryModel.SubCategoryModelItem) {
-                            viewModel?.getListProductByCategory(data.id.toString())
-                        }
+        backBtn?.setOnClickListener { dismiss() }
 
-                    })
+        layoutChange?.setOnClickListener {
+            grid = !grid
+            viewModel?.listProductByCategory?.observe(viewLifecycleOwner, Observer {
+                if (grid){
+                    initProductRecGrid(it)
+                    layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
+
+                }else{
+                    initProductRecList(it)
+                    layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
+
                 }
             })
         }
-        backBtn?.setOnClickListener { dismiss() }
 
+        title?.text = "${handleDataModel.categoryNameHandle}'s ${handleDataModel.subCategoryName}"
+        if (handleDataModel.isViewByCategory == true){
+            viewModel?.subCategoryData?.observe(viewLifecycleOwner, Observer {
+                initSubCategoryRec(it)
+            })
+        }
         viewModel?.listProductByCategory?.observe(viewLifecycleOwner, Observer {
-            recyForProduct?.apply {
-                layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-                adapter = ProductListAdapterForGridLayout(context,it,object :ProductListAdapterForGridLayout.OnProductClick{
-                    override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
-                        context.toastHelper("click on ${product.productName}")
-                    }
+            if (grid){
+                initProductRecGrid(it)
+                layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
 
-                })
+            }else{
+                initProductRecList(it)
+                layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
+
             }
         })
 
 
-
         return view
+    }
+    private fun initProductRecGrid(data: ListProductWithDetailByCategory){
+        recyForProduct?.apply {
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            adapter = ProductListAdapterForGridLayout(context,data,object :
+                ProductListAdapterForGridLayout.OnProductClick{
+                override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
+                    context.toastHelper("click on ${product.productName}")
+                }
+
+            })
+        }
+    }
+
+    private fun initSubCategoryRec(data: SubCategoryModel){
+        recyclerViewSubCategory?.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = SubCategoryListHorizontalAdapter(context, data, object :SubCategoryListHorizontalAdapter.OnSubCategoryClick{
+                @SuppressLint("SetTextI18n")
+                override fun onItemClick(data: SubCategoryModel.SubCategoryModelItem) {
+                    viewModel?.getListProductByCategory(data.id.toString())
+                    title?.text = "${handleDataModel.categoryNameHandle}'s ${data.name}"
+                }
+
+            })
+        }
+
+    }
+
+    private fun initProductRecList(data: ListProductWithDetailByCategory){
+        recyForProduct?.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ProductListAdapterForListLayout(context,data,object :
+                ProductListAdapterForListLayout.OnProductClick{
+                override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
+                    context.toastHelper("click on ${product.productName}")
+                }
+
+            })
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
