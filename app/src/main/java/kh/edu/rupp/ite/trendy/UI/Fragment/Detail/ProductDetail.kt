@@ -1,9 +1,10 @@
 package kh.edu.rupp.ite.trendy.UI.Fragment.Detail
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
+import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,69 +20,68 @@ import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
+import kh.edu.rupp.ite.trendy.Util.calculateDiscount
+import kh.edu.rupp.ite.trendy.Util.totalPriceFormat
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModelFactory
-import kotlinx.android.synthetic.main.fragment_home.view.image_slider
-import kotlinx.android.synthetic.main.item_product_single_list_layout.productName
-import kotlinx.android.synthetic.main.item_product_single_list_layout.view.discountPerce
+import kotlinx.android.synthetic.main.product_detail_layout.view.afterDiscountPriceDetail
 import kotlinx.android.synthetic.main.product_detail_layout.view.btnBack
+import kotlinx.android.synthetic.main.product_detail_layout.view.discountPerceDetail
+import kotlinx.android.synthetic.main.product_detail_layout.view.original_priceDetail
 import kotlinx.android.synthetic.main.product_detail_layout.view.product_description
 import kotlinx.android.synthetic.main.product_detail_layout.view.product_name
-import kotlinx.android.synthetic.main.product_detail_layout.view.product_original_price
 import kotlinx.android.synthetic.main.product_detail_layout.view.titleCategory
-import kotlin.math.log
 
-class ProductDetail(private val productId: String, private val productName: String) :
-
-    BottomSheetDialogFragment() {
+class ProductDetail(private val productId: String, private val productName: String) : BottomSheetDialogFragment() {
 //    private var imageList : ArrayList<SlideModel>? = null
-        private var viewModel: CategoryViewModel? = null
-
+    private var viewModel: CategoryViewModel? = null
+    private var imageSlider : ImageSlider? = null
+    private var imageList : MutableList<SlideModel>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        imageList = mutableListOf<SlideModel>()
         val networkConnectionInterceptor = NetworkConnectionInterceptor()
         val api = MyApi(networkConnectionInterceptor, requireContext())
         val categoryRepository = CategoryRepository(api)
         val factory = CategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, factory).get(CategoryViewModel::class.java)
-
-
         viewModel?.getProductByProductId(productId)
-
-//        imageList = ArrayList<SlideModel>()
-//
-//        imageList?.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
-//        imageList?.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds"))
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.product_detail_layout, container, false)
-
+        imageSlider = view.findViewById<ImageSlider>(R.id.product_image)
         view.titleCategory.text = productName;
         view.btnBack.setOnClickListener {
             dismiss()
         };
 
-
-        val imageSlider = view.findViewById<ImageSlider>(R.id.product_image)
-        val imageList = ArrayList<SlideModel>()
-
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
-        imageList.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds"))
-
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
-
-        viewModel?.productDetail?.observe(viewLifecycleOwner, Observer{
-//            Log.d("DATA11111", "DATA11111 = $it")
-            view.product_name.text = it.productName
-            view.product_original_price.text = it.productPrice.toString()
-            view.product_description.text = it.productDescription
+        viewModel?.productDetail?.observe(viewLifecycleOwner, Observer{product ->
+            if (!product.productDiscount!!.equals(0.0)) {
+                view.original_priceDetail.text = "US $${product.productPrice.toString()}"
+                product.productDiscount?.let { view.discountPerceDetail.text = "- $it%" }
+                view.afterDiscountPriceDetail.text = "$ ${totalPriceFormat(calculateDiscount(product.productDiscount!!, product.productPrice!!))}"
+                view.original_priceDetail.paintFlags = view.original_priceDetail.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                view.discountPerceDetail.visibility = View.VISIBLE
+                view.afterDiscountPriceDetail.visibility = View.VISIBLE
+            } else {
+                view.original_priceDetail.text = "US $${product.productPrice.toString()}"
+                view.discountPerceDetail.visibility = View.GONE
+                view.afterDiscountPriceDetail.visibility = View.GONE
+            }
+            view.product_name.text = product.productName
+            product.productDescription?.let { view.product_description.text= it }
+            if (!product.image.isNullOrEmpty()){
+                for (image in product.image!!){
+                    initSliderImage(image!!.imageUrl!!)
+                }
+            }
 
         })
 
@@ -90,6 +90,11 @@ class ProductDetail(private val productId: String, private val productName: Stri
 //        imageSlider.setImageList(imageList!!, ScaleTypes.FIT)
 
         return view
+    }
+    private fun initSliderImage(imageUrl: String){
+        imageList!!.add(SlideModel(imageUrl))
+        imageSlider?.setImageList(imageList!!, ScaleTypes.FIT)
+
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
