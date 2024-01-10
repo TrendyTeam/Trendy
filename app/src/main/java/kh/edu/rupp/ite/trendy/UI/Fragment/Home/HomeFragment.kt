@@ -1,6 +1,10 @@
 package kh.edu.rupp.ite.trendy.UI.Fragment.Home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,6 +102,18 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                 )
             }
         })
+
+        binding.gitHub.apply {
+            autoLinkMask = Linkify.WEB_URLS
+            movementMethod = LinkMovementMethod.getInstance()
+            isClickable = true
+            setOnClickListener {
+                // Open the website when the TextView is clicked
+                val url = "https://github.com/TrendyTeam/Trendy.git" // Replace with your website URL
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+        }
 
 
 //        val imageList = ArrayList<SlideModel>() // Create image list
