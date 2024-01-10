@@ -26,7 +26,6 @@ import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.ProductListAdapterForGridLayout
-import kh.edu.rupp.ite.trendy.UI.Adapter.ProductListAdapterForListLayout
 import kh.edu.rupp.ite.trendy.UI.Adapter.SubCategoryListHorizontalAdapter
 import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
@@ -48,6 +47,8 @@ class ProductListByCategory(private val context: Context, private val handleData
     private var subCategoryId:String? = ""
     private var subCategoryName: String? = ""
     private var grid = true
+    private var gridLayoutManager :GridLayoutManager? = null
+    private var adapterPro : ProductListAdapterForGridLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ class ProductListByCategory(private val context: Context, private val handleData
         val categoryRepository = CategoryRepository(api)
         val factory = CategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, factory).get(CategoryViewModel::class.java)
-
+        gridLayoutManager = GridLayoutManager(context, SPAN_COUNT_TWO)
         if (handleDataModel.isViewByCategory == true){
             viewModel?.getSubCategoryData(handleDataModel.categoryId!!)
             viewModel?.getListProductByCategory(handleDataModel.subCategoryId!!)
@@ -79,20 +80,16 @@ class ProductListByCategory(private val context: Context, private val handleData
         recyclerViewSubCategory = view.subCategory_rec
         recyForProduct = view.product_list
         backBtn?.setOnClickListener { dismiss() }
-
         layoutChange?.setOnClickListener {
             grid = !grid
-            viewModel?.listProductByCategory?.observe(viewLifecycleOwner, Observer {
-                if (grid){
-                    initProductRecGrid(it)
-                    layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
+            switchLayout()
 
-                }else{
-                    initProductRecList(it)
-                    layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
+            if (grid){
+                layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
 
-                }
-            })
+            }else{
+                layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
+            }
         }
 
         title?.text = "${handleDataModel.categoryNameHandle}'s ${handleDataModel.subCategoryName}"
@@ -102,30 +99,40 @@ class ProductListByCategory(private val context: Context, private val handleData
             })
         }
         viewModel?.listProductByCategory?.observe(viewLifecycleOwner, Observer {
-            if (grid){
-                initProductRecGrid(it)
-                layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
-
-            }else{
-                initProductRecList(it)
-                layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
-
+            val dataX = ListProductWithDetailByCategory()
+            var y = 1
+            while (y!=10){
+                dataX.addAll(it)
+                y++
             }
-        })
-
-
-        return view
-    }
-    private fun initProductRecGrid(data: ListProductWithDetailByCategory){
-        recyForProduct?.apply {
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            adapter = ProductListAdapterForGridLayout(context,data,object :
+            adapterPro = ProductListAdapterForGridLayout(context,dataX,gridLayoutManager!!,object :
                 ProductListAdapterForGridLayout.OnProductClick{
                 override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
                     context.toastHelper("click on ${product.productName}")
                 }
 
             })
+            initProductRecGrid()
+        })
+
+
+
+        return view
+    }
+    private fun switchLayout(){
+        if (gridLayoutManager?.spanCount == SPAN_COUNT_ONE){
+            gridLayoutManager?.spanCount = SPAN_COUNT_TWO
+        }else{
+            gridLayoutManager?.spanCount = SPAN_COUNT_ONE
+        }
+
+        adapterPro?.notifyItemRangeChanged(0,adapterPro!!.itemCount)
+
+    }
+    private fun initProductRecGrid(){
+        recyForProduct?.apply {
+            layoutManager = gridLayoutManager
+            adapter = adapterPro
         }
     }
 
@@ -144,19 +151,6 @@ class ProductListByCategory(private val context: Context, private val handleData
 
     }
 
-    private fun initProductRecList(data: ListProductWithDetailByCategory){
-        recyForProduct?.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ProductListAdapterForListLayout(context,data,object :
-                ProductListAdapterForListLayout.OnProductClick{
-                override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
-                    context.toastHelper("click on ${product.productName}")
-                }
-
-            })
-        }
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
 
@@ -173,5 +167,10 @@ class ProductListByCategory(private val context: Context, private val handleData
     }
 
 
+    companion object{
+        const val SPAN_COUNT_ONE = 1
+        const val SPAN_COUNT_TWO = 2
+
+    }
 
 }

@@ -2,98 +2,120 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/snowWhite"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/app_bar_layout"
-        android:background="@color/white"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="0dp">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="@color/buttonColor" />
-
-            <TextView
-                android:id="@+id/titleCategory"
-                style="@style/appBarTitleStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:text="@string/title_dynamicfeature" />
-        </RelativeLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cd_category"
-        android:elevation="5dp"
-        android:paddingVertical="10dp"
-        android:layout_below="@id/app_bar_layout"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/subCategory_rec"
+            android:layout_height="match_parent">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/app_bar_layout"
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_below="@+id/subCategory_rec"
-                android:layout_marginTop="10dp"
-                android:background="@color/snowWhite"
-                android:paddingHorizontal="15dp"
+                android:layout_height="?actionBarSize"
+                android:elevation="0dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/buttonColor" />
+
+                    <TextView
+                        android:id="@+id/titleCategory"
+                        style="@style/appBarTitleStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:text="@string/title_dynamicfeature" />
+                </RelativeLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_category"
+                android:elevation="5dp"
+                android:paddingVertical="10dp"
+                android:layout_below="@id/app_bar_layout"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/subCategory_rec"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_below="@+id/subCategory_rec"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/snowWhite"
+                        android:paddingHorizontal="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_filter"
-                    android:background="@color/tran"
-                    android:drawableStart="@drawable/baseline_filter_list_24"
-                    android:text="@string/filter"
-                    android:drawablePadding="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"/>
-                
-                <TextView
-                    android:id="@+id/filter_title"
-                    android:layout_width="0dp"
-                    android:textColor="@color/secondary"
-                    android:textSize="14sp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/list_change"
-                    android:layout_gravity="center"
-                    android:src="@drawable/baseline_grid_view_24"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
-                
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_filter"
+                            android:background="@color/tran"
+                            android:drawableStart="@drawable/baseline_filter_list_24"
+                            android:text="@string/filter"
+                            android:drawablePadding="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"/>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                        <TextView
+                            android:id="@+id/filter_title"
+                            android:layout_width="0dp"
+                            android:textColor="@color/secondary"
+                            android:textSize="14sp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+                        <ImageView
+                            android:id="@+id/list_change"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_grid_view_24"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"/>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_below="@id/cd_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/product_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </androidx.core.widget.NestedScrollView>
+            </RelativeLayout>
+
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_list"
-        android:layout_below="@+id/cd_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </androidx.core.widget.NestedScrollView>
 
-    <View
-       android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+
 
 
 

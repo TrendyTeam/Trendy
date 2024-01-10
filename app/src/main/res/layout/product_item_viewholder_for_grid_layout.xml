@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/productImage"
+        android:id="@+id/productImageGrid"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/test_data"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/original_price"
+            android:id="@+id/original_priceGrid"
             android:textSize="14sp"
             android:text="0939"
             android:maxLines="1"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/discountPerce"
+            android:id="@+id/discountPerceGrid"
             android:layout_marginStart="7dp"
             android:textSize="14sp"
             android:text="0939"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/afterDiscountPrice"
+            android:id="@+id/afterDiscountPriceGrid"
             android:textSize="14sp"
             android:layout_marginStart="7dp"
             android:text="0939"
@@ -52,7 +52,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/productName"
+        android:id="@+id/productNameGrid"
         android:textSize="14sp"
         android:textStyle="normal"
         android:textColor="@color/secondary"
