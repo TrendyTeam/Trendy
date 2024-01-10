@@ -22,6 +22,11 @@ class SaleProductItemViewHolder(
 //        binding.discountPrice.text = discountedPrice.toString();
         Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
 
+
+        binding.root.setOnClickListener{
+            listener.onClickProduct(item)
+        }
+
         if (item.productDiscount == 0) {
             binding.percentTag.visibility = View.GONE
         } else {

@@ -19,7 +19,6 @@ class NewProductItemViewHolder(
     @SuppressLint("setTextI18n")
     fun onBind(item: ProductListModel.ProductListModelItem, position: Int) {
         binding.homeProductName.text = item.productName
-        binding.discountPrice.text = "$ ${item.productDiscount}"
         binding.originalPrice.text = "$ ${item.productPrice}"
         Picasso.get().load(item.image!![1]?.imageUrl).into(binding.coverImage)
 
