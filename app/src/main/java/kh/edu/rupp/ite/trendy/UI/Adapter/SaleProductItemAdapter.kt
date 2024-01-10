@@ -14,7 +14,7 @@ class SaleProductItemAdapter(
     private val listener: OnClickListener
 ) : RecyclerView.Adapter<SaleProductItemViewHolder>() {
     interface OnClickListener {
-        fun onClickProduct(data: ProductListModel.ProductListModelItem, position: Int)
+        fun onClickProduct(data: ProductListModel.ProductListModelItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaleProductItemViewHolder {

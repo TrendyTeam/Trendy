@@ -68,11 +68,12 @@ class ProductDetail(private val productId: String, private val productName: Stri
         };
 
         viewModel?.productDetail?.observe(viewLifecycleOwner, Observer{
-            Log.d("DATA11111", "DATA11111 = $it")
+//            Log.d("DATA11111", "DATA11111 = $it")
             view.product_name.text = it.productName
             view.product_original_price.text = it.productPrice.toString()
             view.product_description.text = it.productDescription
         })
+
 
 //        val imageSlider = view.image_slider
 //        imageSlider.setImageList(imageList!!, ScaleTypes.FIT)
