@@ -16,7 +16,7 @@
             android:layout_width="120dp"
             android:layout_height="160dp">
             <ImageView
-                android:id="@+id/productImage"
+                android:id="@+id/productImageList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/test_data"
@@ -32,7 +32,7 @@
             android:layout_width="210dp"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/productName"
+                android:id="@+id/productNameList"
                 android:layout_marginBottom="15dp"
                 android:textColor="@color/secondary"
                 android:text="T-Shirt"
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/original_price"
+                    android:id="@+id/original_priceList"
                     android:textSize="16sp"
                     android:text="0939"
                     android:maxLines="1"
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/discountPerce"
+                    android:id="@+id/discountPerceList"
                     android:layout_marginStart="7dp"
                     android:textSize="16sp"
                     android:text="0939"
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/afterDiscountPrice"
+                    android:id="@+id/afterDiscountPriceList"
                     android:textSize="16sp"
                     android:layout_marginStart="10dp"
                     android:text="0939"
@@ -85,6 +85,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"/>
         <ImageView
+            android:visibility="gone"
             android:layout_marginEnd="20dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_arrow_forward"
