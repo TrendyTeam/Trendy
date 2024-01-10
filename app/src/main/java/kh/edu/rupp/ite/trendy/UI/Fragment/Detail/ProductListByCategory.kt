@@ -27,7 +27,6 @@ import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.UI.Adapter.ProductListAdapterForGridLayout
 import kh.edu.rupp.ite.trendy.UI.Adapter.SubCategoryListHorizontalAdapter
-import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModelFactory
 import kotlinx.android.synthetic.main.product_list_layout.view.btnBack
@@ -36,19 +35,22 @@ import kotlinx.android.synthetic.main.product_list_layout.view.product_list
 import kotlinx.android.synthetic.main.product_list_layout.view.subCategory_rec
 import kotlinx.android.synthetic.main.product_list_layout.view.titleCategory
 
-class ProductListByCategory(private val context: Context, private val handleDataModel: SubCategoryHandleData):BottomSheetDialogFragment() {
+class ProductListByCategory(
+    private val context: Context,
+    private val handleDataModel: SubCategoryHandleData
+) : BottomSheetDialogFragment() {
 
     private var title: TextView? = null
     private var backBtn: ImageView? = null
-    private var recyclerViewSubCategory : RecyclerView? = null
-    private var viewModel : CategoryViewModel? = null
+    private var recyclerViewSubCategory: RecyclerView? = null
+    private var viewModel: CategoryViewModel? = null
     private var recyForProduct: RecyclerView? = null
     private var layoutChange: ImageView? = null
-    private var subCategoryId:String? = ""
+    private var subCategoryId: String? = ""
     private var subCategoryName: String? = ""
     private var grid = true
-    private var gridLayoutManager :GridLayoutManager? = null
-    private var adapterPro : ProductListAdapterForGridLayout? = null
+    private var gridLayoutManager: GridLayoutManager? = null
+    private var adapterPro: ProductListAdapterForGridLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +61,7 @@ class ProductListByCategory(private val context: Context, private val handleData
         val factory = CategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, factory).get(CategoryViewModel::class.java)
         gridLayoutManager = GridLayoutManager(context, SPAN_COUNT_TWO)
-        if (handleDataModel.isViewByCategory == true){
+        if (handleDataModel.isViewByCategory == true) {
             viewModel?.getSubCategoryData(handleDataModel.categoryId!!)
             viewModel?.getListProductByCategory(handleDataModel.subCategoryId!!)
         }
@@ -84,16 +86,16 @@ class ProductListByCategory(private val context: Context, private val handleData
             grid = !grid
             switchLayout()
 
-            if (grid){
+            if (grid) {
                 layoutChange?.setImageResource(R.drawable.baseline_grid_view_24)
 
-            }else{
+            } else {
                 layoutChange?.setImageResource(R.drawable.baseline_view_list_24)
             }
         }
 
         title?.text = "${handleDataModel.categoryNameHandle}'s ${handleDataModel.subCategoryName}"
-        if (handleDataModel.isViewByCategory == true){
+        if (handleDataModel.isViewByCategory == true) {
             viewModel?.subCategoryData?.observe(viewLifecycleOwner, Observer {
                 initSubCategoryRec(it)
             })
@@ -101,52 +103,55 @@ class ProductListByCategory(private val context: Context, private val handleData
         viewModel?.listProductByCategory?.observe(viewLifecycleOwner, Observer {
             val dataX = ListProductWithDetailByCategory()
             var y = 1
-            while (y!=10){
+            while (y != 10) {
                 dataX.addAll(it)
                 y++
             }
-            adapterPro = ProductListAdapterForGridLayout(context,dataX,gridLayoutManager!!,object :
-                ProductListAdapterForGridLayout.OnProductClick{
-                override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
-                    context.toastHelper("click on ${product.productName}")
-                }
+            adapterPro = ProductListAdapterForGridLayout(context, dataX, gridLayoutManager!!, object :
+                    ProductListAdapterForGridLayout.OnProductClick {
+                    override fun onClickProduct(product: ListProductWithDetailByCategory.ListProductWithDetailByCategoryItem) {
+                        val saleProductDetailBottomSheet = ProductDetail(product.id.toString(), product.productName.toString())
+                        saleProductDetailBottomSheet.show(requireActivity().supportFragmentManager, "sale_button_sheet_product_detail")
+                    }
 
-            })
+                })
             initProductRecGrid()
         })
-
-
-
         return view
     }
-    private fun switchLayout(){
-        if (gridLayoutManager?.spanCount == SPAN_COUNT_ONE){
+
+    private fun switchLayout() {
+        if (gridLayoutManager?.spanCount == SPAN_COUNT_ONE) {
             gridLayoutManager?.spanCount = SPAN_COUNT_TWO
-        }else{
+        } else {
             gridLayoutManager?.spanCount = SPAN_COUNT_ONE
         }
 
-        adapterPro?.notifyItemRangeChanged(0,adapterPro!!.itemCount)
+        adapterPro?.notifyItemRangeChanged(0, adapterPro!!.itemCount)
 
     }
-    private fun initProductRecGrid(){
+
+    private fun initProductRecGrid() {
         recyForProduct?.apply {
             layoutManager = gridLayoutManager
             adapter = adapterPro
         }
     }
 
-    private fun initSubCategoryRec(data: SubCategoryModel){
+    private fun initSubCategoryRec(data: SubCategoryModel) {
         recyclerViewSubCategory?.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = SubCategoryListHorizontalAdapter(context, data, object :SubCategoryListHorizontalAdapter.OnSubCategoryClick{
-                @SuppressLint("SetTextI18n")
-                override fun onItemClick(data: SubCategoryModel.SubCategoryModelItem) {
-                    viewModel?.getListProductByCategory(data.id.toString())
-                    title?.text = "${handleDataModel.categoryNameHandle}'s ${data.name}"
-                }
+            adapter = SubCategoryListHorizontalAdapter(
+                context,
+                data,
+                object : SubCategoryListHorizontalAdapter.OnSubCategoryClick {
+                    @SuppressLint("SetTextI18n")
+                    override fun onItemClick(data: SubCategoryModel.SubCategoryModelItem) {
+                        viewModel?.getListProductByCategory(data.id.toString())
+                        title?.text = "${handleDataModel.categoryNameHandle}'s ${data.name}"
+                    }
 
-            })
+                })
         }
 
     }
@@ -154,9 +159,10 @@ class ProductListByCategory(private val context: Context, private val handleData
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
 
-        dialog.setOnShowListener{ dialogInterface ->
+        dialog.setOnShowListener { dialogInterface ->
             val bottomSheetDialog = dialogInterface as BottomSheetDialog
-            val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet =
+                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
@@ -167,7 +173,7 @@ class ProductListByCategory(private val context: Context, private val handleData
     }
 
 
-    companion object{
+    companion object {
         const val SPAN_COUNT_ONE = 1
         const val SPAN_COUNT_TWO = 2
 

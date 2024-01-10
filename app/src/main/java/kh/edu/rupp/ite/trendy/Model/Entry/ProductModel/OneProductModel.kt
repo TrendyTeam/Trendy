@@ -15,13 +15,13 @@ data class OneProductModel(
     @SerializedName("id")
     var id: Int? = 0,
     @SerializedName("image")
-    var image: List<Image?>?,
+    var image: ArrayList<Image?>? = arrayListOf(),
     @SerializedName("items")
     var items: List<Item?>?,
     @SerializedName("product_description")
     var productDescription: String? = "",
     @SerializedName("product_discount")
-    var productDiscount: Int? = 0,
+    var productDiscount: Double? = 0.0,
 
     @SerializedName("product_name")
     var productName: String? = "",
