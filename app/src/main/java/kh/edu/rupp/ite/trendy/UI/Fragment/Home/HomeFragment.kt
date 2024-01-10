@@ -66,11 +66,15 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                     context,
                     it,
                     object : SaleProductItemAdapter.OnClickListener {
-                        override fun onClickProduct(
-                            data: ProductListModel.ProductListModelItem,
-                            position: Int
-                        ) {
+                        override fun onClickProduct(data: ProductListModel.ProductListModelItem) {
+                            val saleProductDetailBottomSheet =
+                                ProductDetail(data.id.toString(), data.productName.toString())
+                            saleProductDetailBottomSheet.show(
+                                requireActivity().supportFragmentManager,
+                                "sale_button_sheet_product_detail"
+                            )
                         }
+
                     })
             }
         })
@@ -83,10 +87,11 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                     it,
                     object : NewProductItemAdapter.OnClickListener {
                         override fun onClickListener(data: ProductListModel.ProductListModelItem) {
-                            val productDetailBottomSheet = ProductDetail(data.id.toString(), data.productName.toString())
+                            val productDetailBottomSheet =
+                                ProductDetail(data.id.toString(), data.productName.toString())
                             productDetailBottomSheet.show(
                                 requireActivity().supportFragmentManager,
-                                "button_sheet_product_detail"
+                                "new_button_sheet_product_detail"
                             )
                         }
                     }
