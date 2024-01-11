@@ -9,7 +9,9 @@ import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCa
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
 import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
+import kh.edu.rupp.ite.trendy.Util.ApiException
 import kh.edu.rupp.ite.trendy.Util.Coroutines
+import kh.edu.rupp.ite.trendy.Util.NoInternetException
 
 class CategoryViewModel (
     private val categoryRepository: CategoryRepository
@@ -37,14 +39,19 @@ class CategoryViewModel (
     val addToCartResponse : LiveData<AddToCartResponse>
         get() = _addToCartResponse
     fun addToCart(userid: String, itemId: String, quantity:Int){
-        Coroutines.ioThanMain(
-            {
-                categoryRepository.addToCart(userid, itemId, quantity)
-            },
-            {
-                _addToCartResponse.value = it
+        Coroutines.main {
+            try {
+                val addToCart = categoryRepository.addToCart(userid,itemId,quantity)
+                addToCart.message?.let {
+                    postListener?.onSuccess(it)
+                    return@main
+                }
+            }catch (e:ApiException){
+                postListener?.onFail(e.message!!)
+            }catch (e:NoInternetException){
+                postListener?.onFail(e.message!!)
             }
-        )
+        }
     }
     fun getTopCategoryData(){
         Coroutines.ioThanMain(
