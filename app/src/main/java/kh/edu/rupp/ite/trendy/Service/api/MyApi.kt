@@ -63,7 +63,7 @@ interface MyApi {
     ): Response<OneProductModel>
 
     @POST("cart/add-to-cart")
-    fun addToCart(
+    suspend fun addToCart(
         @Body info: AddToCartBody
     ):Response<AddToCartResponse>
 
