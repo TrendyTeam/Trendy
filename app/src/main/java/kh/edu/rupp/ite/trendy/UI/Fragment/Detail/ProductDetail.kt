@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.ImageSlider
@@ -16,27 +17,42 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kh.edu.rupp.ite.trendy.Custom.AvailableColorDialog
+import kh.edu.rupp.ite.trendy.Custom.AvailableSizeDialog
+import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
 import kh.edu.rupp.ite.trendy.Util.calculateDiscount
+import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.Util.totalPriceFormat
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.CategoryViewModelFactory
+import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.PostListener
 import kotlinx.android.synthetic.main.product_detail_layout.view.afterDiscountPriceDetail
 import kotlinx.android.synthetic.main.product_detail_layout.view.btnBack
+import kotlinx.android.synthetic.main.product_detail_layout.view.button_checkout
 import kotlinx.android.synthetic.main.product_detail_layout.view.discountPerceDetail
 import kotlinx.android.synthetic.main.product_detail_layout.view.original_priceDetail
+import kotlinx.android.synthetic.main.product_detail_layout.view.product_color
 import kotlinx.android.synthetic.main.product_detail_layout.view.product_description
 import kotlinx.android.synthetic.main.product_detail_layout.view.product_name
+import kotlinx.android.synthetic.main.product_detail_layout.view.product_size
 import kotlinx.android.synthetic.main.product_detail_layout.view.titleCategory
 
-class ProductDetail(private val productId: String, private val productName: String) : BottomSheetDialogFragment() {
+class ProductDetail(private val productId: String, private val productName: String) : BottomSheetDialogFragment(), PostListener {
 //    private var imageList : ArrayList<SlideModel>? = null
     private var viewModel: CategoryViewModel? = null
     private var imageSlider : ImageSlider? = null
     private var imageList : MutableList<SlideModel>? = null
+    private var colorBtn : TextView? = null
+    private var sizeBtn : TextView? = null
+    private var sizePro : String? = ""
+    private var colorPro: String? = ""
+    private var itemId :String? = ""
+    private var amountPro : Int? = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         imageList = mutableListOf<SlideModel>()
@@ -46,6 +62,7 @@ class ProductDetail(private val productId: String, private val productName: Stri
         val factory = CategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, factory).get(CategoryViewModel::class.java)
         viewModel?.getProductByProductId(productId)
+        viewModel?.postListener = this
 
     }
 
@@ -58,10 +75,11 @@ class ProductDetail(private val productId: String, private val productName: Stri
         val view = inflater.inflate(R.layout.product_detail_layout, container, false)
         imageSlider = view.findViewById<ImageSlider>(R.id.product_image)
         view.titleCategory.text = productName;
+        colorBtn = view.product_color
+        sizeBtn = view.product_size
         view.btnBack.setOnClickListener {
             dismiss()
         };
-
         viewModel?.productDetail?.observe(viewLifecycleOwner, Observer{product ->
             if (!product.productDiscount!!.equals(0.0)) {
                 view.original_priceDetail.text = "US $${product.productPrice.toString()}"
@@ -82,21 +100,61 @@ class ProductDetail(private val productId: String, private val productName: Stri
                     initSliderImage(image!!.imageUrl!!)
                 }
             }
+            initDialog(product!!.items!!)
 
         })
 
 
-//        val imageSlider = view.image_slider
-//        imageSlider.setImageList(imageList!!, ScaleTypes.FIT)
+        view.button_checkout.setOnClickListener {
+            if (itemId.isNullOrEmpty()){
+                requireContext().toastHelper("Please select size and color!")
+            }else{
+                if (amountPro != 0){
+                    viewModel?.addToCart("1",itemId!!,1)
+                }else{
+                    requireContext().toastHelper("This item sold out stock!")
+                }
+            }
+        }
+
+
 
         return view
+    }
+
+    private fun initDialog(data: ArrayList<OneProductModel.Item>){
+        sizeBtn?.setOnClickListener {
+            AvailableSizeDialog(requireContext(),data, object : AvailableSizeDialog.OnCreateListener{
+                override fun onSuccess(item: OneProductModel.Item) {
+                    sizeBtn?.text = item.size
+                    sizePro = item.size
+                    itemId = ""
+                }
+
+            }).show()
+        }
+        colorBtn?.setOnClickListener {
+            if (!sizePro.isNullOrEmpty()){
+                val item = data.filter { it.size == sizePro } as ArrayList
+               AvailableColorDialog(requireContext(), item, object : AvailableColorDialog.OnCreateListener{
+                   override fun onSuccess(item: OneProductModel.Item) {
+                       itemId = item.itemId.toString()
+                       amountPro = item.amount
+
+                   }
+
+               }).show()
+
+            }else{
+                requireContext().toastHelper("Please Select Size!")
+            }
+        }
     }
     private fun initSliderImage(imageUrl: String){
         imageList!!.add(SlideModel(imageUrl))
         imageSlider?.setImageList(imageList!!, ScaleTypes.FIT)
 
     }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
 
@@ -111,5 +169,13 @@ class ProductDetail(private val productId: String, private val productName: Stri
         }
 
         return dialog
+    }
+
+    override fun onSuccess(message: String) {
+        requireContext().toastHelper(message)
+    }
+
+    override fun onFail(message: String) {
+        requireContext().toastHelper(message)
     }
 }

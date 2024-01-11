@@ -4,6 +4,8 @@ import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
 import kh.edu.rupp.ite.trendy.Service.SafeApiRequest
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 
@@ -25,6 +27,11 @@ class CategoryRepository(
 
     suspend fun getProductByProductId(id: String) : OneProductModel {
         return apiRequest { api.getOneProduct(id) }
+    }
+
+    suspend fun addToCart(userid: String, itemId: String, quantity:Int): AddToCartResponse{
+        val body = AddToCartBody(userid, itemId, quantity)
+        return apiRequest { api.addToCart(body) }
     }
 
 

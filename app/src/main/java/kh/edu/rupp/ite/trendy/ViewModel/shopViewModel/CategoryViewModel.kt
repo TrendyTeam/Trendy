@@ -7,12 +7,15 @@ import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
 import kh.edu.rupp.ite.trendy.Model.Repository.Category.CategoryRepository
 import kh.edu.rupp.ite.trendy.Util.Coroutines
 
 class CategoryViewModel (
     private val categoryRepository: CategoryRepository
 ) :ViewModel() {
+
+    var postListener: PostListener? = null
 
     private val _topCategoryData = MutableLiveData<TopCategoryModel>()
     val topCategoryData : LiveData<TopCategoryModel>
@@ -30,9 +33,19 @@ class CategoryViewModel (
     private val _productDetail = MutableLiveData<OneProductModel>()
     val productDetail : LiveData<OneProductModel>
         get() = _productDetail
-
-
-
+    private val _addToCartResponse = MutableLiveData<AddToCartResponse>()
+    val addToCartResponse : LiveData<AddToCartResponse>
+        get() = _addToCartResponse
+    fun addToCart(userid: String, itemId: String, quantity:Int){
+        Coroutines.ioThanMain(
+            {
+                categoryRepository.addToCart(userid, itemId, quantity)
+            },
+            {
+                _addToCartResponse.value = it
+            }
+        )
+    }
     fun getTopCategoryData(){
         Coroutines.ioThanMain(
             {

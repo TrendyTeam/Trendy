@@ -28,6 +28,11 @@
         <item name="tint">@color/buttonColor</item>
     </style>
 
+    <style name="DialogAnimationScaleInOut">
+        <item name="android:windowEnterAnimation">@anim/dialog_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_scale_out</item>
+    </style>
+
 
     <style name="appBarTitleStyle">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title
