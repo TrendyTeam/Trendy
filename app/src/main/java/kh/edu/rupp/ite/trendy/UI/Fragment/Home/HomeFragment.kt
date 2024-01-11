@@ -127,18 +127,13 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
             }
         })
 
-        binding.gitHub.apply {
-            autoLinkMask = Linkify.WEB_URLS
-            movementMethod = LinkMovementMethod.getInstance()
-            isClickable = true
-            setOnClickListener {
-                val url = "https://github.com/TrendyTeam/Trendy.git"
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
-            }
+        binding.gitHub.setOnClickListener {
+            val url = "https://github.com/TrendyTeam/Trendy.git"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
         }
 
-
+        
 //        val imageList = ArrayList<SlideModel>() // Create image list
 //        imageList.add(SlideModel("https://t.ly/aaa_", "The future is our hands."))
 //        imageList.add(SlideModel("https://t.ly/sg91", "Climate change is moving very fast."))
