@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import kh.edu.rupp.ite.trendy.Base.BaseFragmentBinding
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
@@ -56,9 +58,31 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
         val imageList = ArrayList<SlideModel>()
 
         // Add your image URLs and corresponding descriptions here
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
-        imageList.add(SlideModel("https://imageio.forbes.com/blogs-images/msolomon/files/2015/05/0504_armani-suit-2013-wolf-of-wall-street_1200x675-1152x648.jpg?format=jpg&height=900&width=1600&fit=bounds"))
+        imageList.add(SlideModel("https://pinetimeclothing.com/cdn/shop/products/16.9_LOOK_WMN_DUSTYMINT_LANDSCAPE_TEE_00.jpg?v=1652442703"))
+        imageList.add(SlideModel("https://pbs.twimg.com/media/CfFezyVWAAAHxCZ.jpg"))
         imageSlider.setImageList(imageList, ScaleTypes.FIT)
+
+
+
+        imageSlider.setItemClickListener(object : ItemClickListener {
+            override fun doubleClick(position: Int) {
+                // TODO: Handle double click if needed
+            }
+
+            override fun onItemSelected(position: Int) {
+                // Handle click event here
+                when (position) {
+                    0 -> {
+                        Log.d("DataClick", "Clicked on slider 0")
+                    }
+
+                    1 -> {
+                        Log.d("DataClick", "Clicked on slider 1")
+                    }
+                }
+            }
+        })
+
 
         //get data form api
         viewModel?.productList?.observe(viewLifecycleOwner, Observer {
@@ -108,8 +132,7 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
             movementMethod = LinkMovementMethod.getInstance()
             isClickable = true
             setOnClickListener {
-                // Open the website when the TextView is clicked
-                val url = "https://github.com/TrendyTeam/Trendy.git" // Replace with your website URL
+                val url = "https://github.com/TrendyTeam/Trendy.git"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }
