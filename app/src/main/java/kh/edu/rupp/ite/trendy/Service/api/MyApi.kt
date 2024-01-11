@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.trendy.Service.api
 
 import android.content.Context
+import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CartModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
@@ -63,9 +64,14 @@ interface MyApi {
     ): Response<OneProductModel>
 
     @POST("cart/add-to-cart")
-    fun addToCart(
+    suspend fun addToCart(
         @Body info: AddToCartBody
     ):Response<AddToCartResponse>
+
+    @GET("cart/{id}")
+    suspend fun getCart(
+        @Path("id") id: String
+    ) : Response<CartModel>
 
     companion object {
         operator fun invoke(
