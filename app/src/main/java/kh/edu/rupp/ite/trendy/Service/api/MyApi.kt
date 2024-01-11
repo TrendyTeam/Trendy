@@ -6,6 +6,8 @@ import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartBody
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
@@ -60,6 +62,10 @@ interface MyApi {
         @Path("id") id: String
     ): Response<OneProductModel>
 
+    @POST("cart/add-to-cart")
+    fun addToCart(
+        @Body info: AddToCartBody
+    ):Response<AddToCartResponse>
 
     companion object {
         operator fun invoke(

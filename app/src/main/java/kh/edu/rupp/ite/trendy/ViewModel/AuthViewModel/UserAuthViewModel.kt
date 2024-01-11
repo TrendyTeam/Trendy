@@ -49,9 +49,10 @@ class UserAuthViewModel(
         Coroutines.main {
             try {
                 val authRepository = userRepository.userLogIn(phone, password)
-                authRepository.user.let {
-                    authListener?.onSuccessAuth(it!!)
+                authRepository.user?.let {
+                    authListener?.onSuccessAuth(it)
                     saveToken(authRepository.accessToken!!)
+                    userRepository.saveUseId(it.userId.toString())
                     return@main
                 }
             } catch (e: ApiException) {

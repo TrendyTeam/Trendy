@@ -17,7 +17,7 @@ data class OneProductModel(
     @SerializedName("image")
     var image: ArrayList<Image?>? = arrayListOf(),
     @SerializedName("items")
-    var items: List<Item?>?,
+    var items: ArrayList<Item>? = arrayListOf(),
     @SerializedName("product_description")
     var productDescription: String? = "",
     @SerializedName("product_discount")
