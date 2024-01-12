@@ -29,11 +29,17 @@ jobs:
       run: chmod +x ./build_script.sh
 
     - name: Build APK
-      run: ./build_script.sh
+      run: |
+        echo "Current directory: $(pwd)"
+        echo "List files: $(ls -l)"
+        ./build_script.sh
 
     - name: Upload APK as artifact
       if: success()
-      uses: actions/upload-artifact@v2
-      with:
-        name: trendy
-        path: trendy.apk
+      run: |
+        echo "Artifact upload directory: $(pwd)"
+        echo "List files: $(ls -l)"
+        uses: actions/upload-artifact@v2
+        with:
+          name: trendy
+          path: trendy.apk
