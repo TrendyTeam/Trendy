@@ -2,18 +2,18 @@ name: Android CI
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - /^(uat|prd)-\d\.\d\.\d$/
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 17
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -23,9 +23,17 @@ jobs:
     - name: Install Android SDK
       uses: android-actions/setup-android@v3
       with:
-        sdk-version: '33'
+        sdk-version: '31.0.0' # Use the desired Android SDK version
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Grant execute permission for build script
+      run: chmod +x ./build_script.sh
+
+    - name: Build APK
+      run: ./build_script.sh
+
+    - name: Upload APK as artifact
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: trendy
+        path: trendy.apk
