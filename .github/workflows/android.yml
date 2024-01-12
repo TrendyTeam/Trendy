@@ -40,7 +40,7 @@ jobs:
         apkDir="app/build/outputs/apk/${flavor}/${build_type}"
         apkMetaFile="$apkDir/output-metadata.json"
         apkFile=$(cat $apkMetaFile | jq -r '.elements[0].outputFile')
-        cp "$apkDir/$apkFile" "perfume-shop.apk"
+        cp "$apkDir/$apkFile" "trendy.apk"
 
     - name: Upload artifact
       if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, 'uat-') || contains(github.ref, 'prd-')
