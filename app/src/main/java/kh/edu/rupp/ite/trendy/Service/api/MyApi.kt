@@ -2,6 +2,8 @@ package kh.edu.rupp.ite.trendy.Service.api
 
 import android.content.Context
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CartModel
+import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CheckOutModel
+import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.DeleteCartModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
@@ -21,8 +23,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface MyApi {
@@ -66,12 +70,21 @@ interface MyApi {
     @POST("cart/add-to-cart")
     suspend fun addToCart(
         @Body info: AddToCartBody
-    ):Response<AddToCartResponse>
+    ): Response<AddToCartResponse>
 
     @GET("cart/{id}")
     suspend fun getCart(
         @Path("id") id: String
-    ) : Response<CartModel>
+    ): Response<CartModel>
+
+    @PUT("user/update")
+    suspend fun updateUser()
+
+    @GET("order/initiate")
+    suspend fun checkOutCart(): Response<CheckOutModel>
+
+    @DELETE("cart/delete")
+    suspend fun deleteAllCart() : Response<DeleteCartModel>
 
     companion object {
         operator fun invoke(
