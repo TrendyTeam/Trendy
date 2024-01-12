@@ -37,7 +37,7 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>() {
 
 
         viewModel?.cartList?.observe(viewLifecycleOwner, Observer {
-            Log.d("CART", "CART DATA = $it" )
+//            Log.d("CART", "CART DATA = $it" )
             binding.cartData.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = CartAdapter(
