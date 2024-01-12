@@ -14,7 +14,7 @@ fun Context.toastHelper(message: String){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 fun logCus(message: String){
-    Log.d("LOG_CUS", message)
+    Log.i("LOG_CUS", message)
 }
 fun hideKeyboard(view: View, activity:Activity) {
     val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
