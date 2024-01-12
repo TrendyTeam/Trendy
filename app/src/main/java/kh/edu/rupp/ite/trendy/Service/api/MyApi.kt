@@ -11,6 +11,7 @@ import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.CartItemDeleteModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
@@ -85,6 +86,13 @@ interface MyApi {
 
     @DELETE("cart/delete")
     suspend fun deleteAllCart() : Response<DeleteCartModel>
+
+    @DELETE("cart/{userid}/{cartid}")
+    suspend fun deleteCart(
+        @Path("userid") userid:String,
+        @Path("cartid") cartid:String
+    ):Response<CartItemDeleteModel>
+
 
     companion object {
         operator fun invoke(
