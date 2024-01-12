@@ -4,6 +4,7 @@ import android.content.Context
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CartModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CheckOutModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.DeleteCartModel
+import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.OrderCompleteModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.SubCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CategoryModel.TopCategoryModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ListProductWithDetailByCategory
@@ -81,11 +82,11 @@ interface MyApi {
     @PUT("user/update")
     suspend fun updateUser()
 
-    @GET("order/initiate")
+    @POST("order/initiate")
     suspend fun checkOutCart(): Response<CheckOutModel>
 
     @DELETE("cart/delete")
-    suspend fun deleteAllCart() : Response<DeleteCartModel>
+    suspend fun deleteAllCart() : Response<OrderCompleteModel>
 
     @DELETE("cart/{userid}/{cartid}")
     suspend fun deleteCart(
