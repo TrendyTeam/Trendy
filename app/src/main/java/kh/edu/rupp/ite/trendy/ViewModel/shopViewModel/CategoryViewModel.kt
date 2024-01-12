@@ -38,7 +38,7 @@ class CategoryViewModel (
     private val _addToCartResponse = MutableLiveData<AddToCartResponse>()
     val addToCartResponse : LiveData<AddToCartResponse>
         get() = _addToCartResponse
-    fun addToCart(userid: String, itemId: String, quantity:Int){
+    fun addToCart(userid: Int, itemId: String, quantity:Int){
         Coroutines.main {
             try {
                 val addToCart = categoryRepository.addToCart(userid,itemId,quantity)

@@ -29,7 +29,7 @@ class CategoryRepository(
         return apiRequest { api.getOneProduct(id) }
     }
 
-    suspend fun addToCart(userid: String, itemId: String, quantity:Int): AddToCartResponse{
+    suspend fun addToCart(userid: Int, itemId: String, quantity:Int): AddToCartResponse{
         val body = AddToCartBody(userid, itemId, quantity)
         return apiRequest { api.addToCart(body) }
     }

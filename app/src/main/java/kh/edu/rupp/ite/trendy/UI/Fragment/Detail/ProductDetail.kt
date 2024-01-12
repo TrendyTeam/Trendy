@@ -110,7 +110,7 @@ class ProductDetail(private val productId: String, private val productName: Stri
                 requireContext().toastHelper("Please select size and color!")
             }else{
                 if (amountPro != 0){
-                    viewModel?.addToCart("1",itemId!!,1)
+                    viewModel?.addToCart(1,itemId!!,1)
                 }else{
                     requireContext().toastHelper("This item sold out stock!")
                 }
