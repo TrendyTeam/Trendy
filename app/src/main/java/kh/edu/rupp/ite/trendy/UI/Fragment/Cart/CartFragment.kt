@@ -28,13 +28,6 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>(), PostListener {
     private lateinit var cartRepository: CartRepository
     private lateinit var factory: CartViewModelFactory
     private var viewModel: CartViewModel? = null
-
-    override fun onViewCreated() {
-
-        val sharePreferences = MySharedPreferences(requireContext())
-
-
-
     private var listCart : ArrayList<CartModel.Cart> = arrayListOf()
     private var userId = 0
     private var sharePreferences : MySharedPreferences? = null
@@ -50,9 +43,8 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>(), PostListener {
         sharePreferences?.getUserId().let { viewModel?.getCartList(it.toString()) }
         sharePreferences?.getUserId().let{userId = it!! }
     }
+
     override fun onViewCreated() {
-
-
         viewModel?.cartList?.observe(viewLifecycleOwner, Observer {
             listCart = it.cart!!
             initRec()
