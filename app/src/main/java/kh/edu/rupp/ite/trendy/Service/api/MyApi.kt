@@ -27,6 +27,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface MyApi {
@@ -85,6 +86,13 @@ interface MyApi {
 
     @DELETE("cart/delete")
     suspend fun deleteAllCart() : Response<DeleteCartModel>
+
+    @DELETE("cart/{userid}/{cartid}")
+    suspend fun deleteCart(
+        @Path("userid") userid:String,
+        @Part("cartid") cartid:String
+    ):Response<AddToCartResponse>
+
 
     companion object {
         operator fun invoke(

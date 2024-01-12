@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CartModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CheckOutModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Cart.CartRepository
+import kh.edu.rupp.ite.trendy.Util.ApiException
 import kh.edu.rupp.ite.trendy.Util.Coroutines
+import kh.edu.rupp.ite.trendy.Util.NoInternetException
+import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.PostListener
 
 class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
 
     private val _cartList = MutableLiveData<CartModel>()
-
+    var postListener : PostListener? = null
     val cartList: LiveData<CartModel>
         get() = _cartList
 
@@ -30,6 +33,22 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
                 _cartList.value = it
             }
         )
+    }
+
+    fun deleteCartItem(userid:String, cartId:String){
+        Coroutines.main {
+            try {
+                val deleteCart = cartRepository.deleteItemCart(userid,cartId)
+                deleteCart.message?.let {
+                    postListener?.onSuccess(it)
+                    return@main
+                }
+            }catch (e:ApiException){
+                postListener?.onFail(e.message.toString())
+            }catch (e:NoInternetException){
+                postListener?.onFail(e.message.toString())
+            }
+        }
     }
 
     fun getCheckoutData() {

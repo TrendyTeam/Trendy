@@ -15,12 +15,16 @@ class CartViewHolder (
 
     @SuppressLint("SetTextI18n")
     fun onBind (item: CartModel.Cart) {
-        binding.productName.text = item.productName
+        item.productName?.let {   binding.productName.text = it}
+
 //        Picasso.get().load(item.image!![0]?.imageUrl).into(binding.coverImage)
-        Picasso.get().load(item.image).into(binding.cardImage)
-        binding.colorFromApi.text = item.color
-        binding.sizeFromApi.text = item.size
-        binding.priceFromApi.text = "$ ${item.productPrice}"
+        if (!item.image.isNullOrEmpty()){
+            item.image?.let { Picasso.get().load(it).into(binding.cardImage) }
+
+        }
+        item.color?.let{ binding.colorFromApi.text = it }
+        item.size?.let { binding.sizeFromApi.text = it }
+        item.productPrice?.let {  binding.priceFromApi.text = it.toString() }
 
     }
 }

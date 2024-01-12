@@ -10,7 +10,7 @@ import kh.edu.rupp.ite.trendy.UI.ViewHolder.CartViewHolder
 
 class CartAdapter(
     private val context: Context,
-    private val cart: List<CartModel.Cart>,
+    private val cart: ArrayList<CartModel.Cart>,
 ) : RecyclerView.Adapter<CartViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view =
