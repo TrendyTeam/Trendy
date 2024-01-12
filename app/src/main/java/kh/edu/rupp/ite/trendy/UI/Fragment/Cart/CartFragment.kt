@@ -28,6 +28,7 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>() {
         val sharePreferences = MySharedPreferences(requireContext())
 
 
+
         networkConnectionInterceptor = NetworkConnectionInterceptor()
         api = MyApi(networkConnectionInterceptor, requireContext())
         cartRepository = CartRepository(api)
@@ -46,6 +47,10 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>() {
             }
 
         })
+
+        binding.buttonCheckout.setOnClickListener{
+            CheckOutActivity.lunch(requireContext())
+        }
 
 
     }

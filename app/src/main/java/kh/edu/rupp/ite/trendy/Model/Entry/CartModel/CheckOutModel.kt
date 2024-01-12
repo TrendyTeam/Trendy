@@ -11,7 +11,7 @@ data class CheckOutModel(
 ) {
     data class OrderDetails(
         @SerializedName("items")
-        var items: List<Item> = listOf(),
+        var items: ArrayList<Item> = arrayListOf(),
         @SerializedName("totalAmount")
         var totalAmount: Double = 0.0
     ) {

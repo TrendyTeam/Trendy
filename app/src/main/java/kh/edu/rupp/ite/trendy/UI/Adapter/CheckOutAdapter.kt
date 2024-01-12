@@ -10,10 +10,10 @@ import kh.edu.rupp.ite.trendy.UI.ViewHolder.CheckOutViewHolder
 
 class CheckOutAdapter (
     private val context: Context,
-    private val checkOutData: List<CheckOutModel.OrderDetails>
+    private val checkOutData: List<CheckOutModel.OrderDetails.Item>
 ) : RecyclerView.Adapter<CheckOutViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckOutViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.bag_item_view_holder, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.check_out_view_holder, parent, false)
         return  CheckOutViewHolder((view))
     }
 
