@@ -52,7 +52,7 @@ class UserAuthViewModel(
                 authRepository.user?.let {
                     authListener?.onSuccessAuth(it)
                     saveToken(authRepository.accessToken!!)
-                    userRepository.saveUseId(it.userId.toString())
+                    userRepository.saveUseId(it.userId!!)
                     return@main
                 }
             } catch (e: ApiException) {

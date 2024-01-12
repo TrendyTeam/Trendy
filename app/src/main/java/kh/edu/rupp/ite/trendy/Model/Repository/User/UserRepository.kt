@@ -33,8 +33,8 @@ class UserRepository(
     suspend fun getUserDetail() : UserDetailModel{
         return apiRequest { api.getUserDetail() }
     }
-    fun saveUseId(userId: String) = sharedPreferences.saveUserId(userId)
-    fun getUserId():String?{
+    fun saveUseId(userId: Int) = sharedPreferences.saveUserId(userId)
+    fun getUserId():Int{
         return sharedPreferences.getUserId()
     }
 

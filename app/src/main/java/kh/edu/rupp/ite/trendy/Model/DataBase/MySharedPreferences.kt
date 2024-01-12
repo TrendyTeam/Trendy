@@ -16,13 +16,13 @@ class MySharedPreferences (context: Context){
         editor.apply()
     }
 
-    fun saveUserId(userId: String){
+    fun saveUserId(userId: Int){
         val editor = sharedPreferences.edit()
-        editor.putString(USER_ID, userId)
+        editor.putInt(USER_ID, userId)
         editor.apply()
     }
-    fun getUserId():String?{
-        return sharedPreferences.getString(USER_ID, null)
+    fun getUserId():Int{
+        return sharedPreferences.getInt(USER_ID, 0)
     }
 
     fun getToken():String?{
