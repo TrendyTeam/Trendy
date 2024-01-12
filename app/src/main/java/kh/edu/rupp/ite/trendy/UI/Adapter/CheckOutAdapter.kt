@@ -13,7 +13,7 @@ class CheckOutAdapter (
     private val checkOutData: List<CheckOutModel.OrderDetails>
 ) : RecyclerView.Adapter<CheckOutViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckOutViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.activity_checkout, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.bag_item_view_holder, parent, false)
         return  CheckOutViewHolder((view))
     }
 
