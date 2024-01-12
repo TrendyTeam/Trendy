@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CartModel
+import kh.edu.rupp.ite.trendy.Model.Entry.CartModel.CheckOutModel
 import kh.edu.rupp.ite.trendy.Model.Repository.Cart.CartRepository
 import kh.edu.rupp.ite.trendy.Util.Coroutines
 
-class CartViewModel (private val cartRepository: CartRepository) : ViewModel() {
+class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
 
     private val _cartList = MutableLiveData<CartModel>()
 
@@ -15,14 +16,29 @@ class CartViewModel (private val cartRepository: CartRepository) : ViewModel() {
         get() = _cartList
 
 
+    private val _checkOutDataList = MutableLiveData<CheckOutModel>()
+    val checkOutDataList: LiveData<CheckOutModel>
+        get() = _checkOutDataList
 
-    fun getCartList(id : String) {
+
+    fun getCartList(id: String) {
         Coroutines.ioThanMain(
             {
                 cartRepository.getCartByUser(id)
             },
             {
                 _cartList.value = it
+            }
+        )
+    }
+
+    fun getCheckoutData() {
+        Coroutines.ioThanMain(
+            {
+                cartRepository.checkOutItem()
+            },
+            {
+                _checkOutDataList.value = it
             }
         )
     }
