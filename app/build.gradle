@@ -38,7 +38,7 @@ android {
             keyAlias 'trendy'
             keyPassword '123456'
         }
-        prdRelease {
+        prdrelease {
             storeFile file('trendy-prd.keystore')
             storePassword '123456'
             keyAlias 'trendy-prd'
@@ -47,10 +47,11 @@ android {
     }
 
 
+
     buildTypes {
         release {
             productFlavors.uat.signingConfig signingConfigs.uatRelease
-            productFlavors.prd.signingConfig signingConfigs.prdRelease
+            productFlavors.prd.signingConfig signingConfigs.prdrelease  // Updated here
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -58,6 +59,7 @@ android {
 
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
