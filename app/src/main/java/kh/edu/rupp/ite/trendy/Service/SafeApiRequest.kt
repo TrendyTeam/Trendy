@@ -1,5 +1,6 @@
 package kh.edu.rupp.ite.trendy.Service
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginErrorModel
 import kh.edu.rupp.ite.trendy.Util.ApiException
@@ -12,10 +13,11 @@ abstract class SafeApiRequest {
     suspend fun <T : Any> apiRequest(call: suspend () -> Response<T>) : T {
         val response = call.invoke()
         if (response.isSuccessful){
+            Log.d("ERRORHANDLE", "succ = $response ")
             return response.body()!!
         }else{
             val error = response.errorBody()?.string()
-            logCus("errorData = $error")
+            logCus("ERRORHANDLE = $error")
             val message = StringBuilder()
             error?.let {
                 try {
