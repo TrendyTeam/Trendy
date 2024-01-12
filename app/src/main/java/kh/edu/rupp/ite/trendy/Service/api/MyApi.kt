@@ -11,6 +11,7 @@ import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.OneProductModel
 import kh.edu.rupp.ite.trendy.Model.Entry.ProductModel.ProductListModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartBody
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.AddToCartResponse
+import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.CartItemDeleteModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserDetailModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLogInResponseModel
 import kh.edu.rupp.ite.trendy.Model.Entry.UserAuthModel.UserLoginBody
@@ -27,7 +28,6 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface MyApi {
@@ -90,8 +90,8 @@ interface MyApi {
     @DELETE("cart/{userid}/{cartid}")
     suspend fun deleteCart(
         @Path("userid") userid:String,
-        @Part("cartid") cartid:String
-    ):Response<AddToCartResponse>
+        @Path("cartid") cartid:String
+    ):Response<CartItemDeleteModel>
 
 
     companion object {

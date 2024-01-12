@@ -11,11 +11,12 @@ import kh.edu.rupp.ite.trendy.UI.ViewHolder.CartViewHolder
 class CartAdapter(
     private val context: Context,
     private val cart: ArrayList<CartModel.Cart>,
+    private val mListener: ClickListener
 ) : RecyclerView.Adapter<CartViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.bag_item_view_holder, parent, false)
-        return CartViewHolder(view)
+        return CartViewHolder(view, mListener)
     }
 
     override fun getItemCount(): Int {
@@ -25,6 +26,7 @@ class CartAdapter(
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.onBind(cart[position])
     }
-
-
+    interface ClickListener{
+        fun onDelete(cartId: Int)
+    }
 }
