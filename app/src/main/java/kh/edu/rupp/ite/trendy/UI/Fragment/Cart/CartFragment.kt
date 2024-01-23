@@ -67,6 +67,7 @@ class CartFragment : BaseFragmentBinding<FragmentCartBinding>(), PostListener {
                         requireContext().getString(R.string.delete_alert)
                     ){
                         viewModel?.deleteCartItem(userId.toString(), cartId.toString())
+
                         viewModel?.cartList?.observe(viewLifecycleOwner, Observer {
                             listCart = it.cart!!
                             adapter!!.notifyDataSetChanged()
