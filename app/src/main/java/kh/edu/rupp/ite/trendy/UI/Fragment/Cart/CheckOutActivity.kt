@@ -3,25 +3,21 @@ package kh.edu.rupp.ite.trendy.UI.Fragment.Cart
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kh.edu.rupp.ite.trendy.Base.BaseActivityBinding
+import kh.edu.rupp.ite.trendy.Custom.DialogX
 import kh.edu.rupp.ite.trendy.Model.Repository.Cart.CartRepository
 import kh.edu.rupp.ite.trendy.R
 import kh.edu.rupp.ite.trendy.Service.api.MyApi
 import kh.edu.rupp.ite.trendy.Service.network.NetworkConnectionInterceptor
-import kh.edu.rupp.ite.trendy.UI.Adapter.CartAdapter
 import kh.edu.rupp.ite.trendy.UI.Adapter.CheckOutAdapter
 import kh.edu.rupp.ite.trendy.Util.toastHelper
 import kh.edu.rupp.ite.trendy.ViewModel.CartViewModel.CartViewModel
 import kh.edu.rupp.ite.trendy.ViewModel.CartViewModel.CartViewModelFactory
 import kh.edu.rupp.ite.trendy.ViewModel.shopViewModel.PostListener
 import kh.edu.rupp.ite.trendy.databinding.ActivityCheckOutBinding
-import kotlinx.android.synthetic.main.fragment_profile.back_btn
 
 class CheckOutActivity : BaseActivityBinding<ActivityCheckOutBinding>(), PostListener {
 
@@ -61,8 +57,14 @@ class CheckOutActivity : BaseActivityBinding<ActivityCheckOutBinding>(), PostLis
         }
 
         binding.buttonDone.setOnClickListener{
-            viewModel?.orderCompleted()
-            finish()
+
+            DialogX(this).showQuestion(
+                this.getString(R.string.are_you_sure),
+                this.getString(R.string.check_out_alert)
+            ){
+                viewModel?.orderCompleted()
+                finish()
+            }
         }
     }
 

@@ -3,8 +3,6 @@ package kh.edu.rupp.ite.trendy.UI.Fragment.Home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -97,7 +95,7 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
                         override fun onClickProduct(data: ProductListModel.ProductListModelItem) {
                             val saleProductDetailBottomSheet =
                                 ProductDetail(data.id.toString(), data.productName.toString())
-                            saleProductDetailBottomSheet.show(
+                                saleProductDetailBottomSheet.show(
                                 requireActivity().supportFragmentManager,
                                 "sale_button_sheet_product_detail"
                             )
